@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<title>The Miracle Lab — Miss Miracle Cosmetics</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#F5F3FF;font-family:system-ui,-apple-system,sans-serif;min-height:100vh}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
+input[type=number]{-moz-appearance:textfield}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:#CBD5E1;border-radius:2px}
+.hidden{display:none!important}
+
+
+/* ACCESS SCREEN */
+.access-screen{position:fixed;inset:0;background:linear-gradient(135deg,#4F46E5,#1E1B4B);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px}
+.access-card{background:#fff;border-radius:24px;padding:36px 28px;width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,.4);text-align:center}
+.access-logo{font-size:48px;margin-bottom:12px}
+.access-brand{font-size:10px;letter-spacing:3px;color:#9CA3AF;text-transform:uppercase;margin-bottom:6px}
+.access-title{font-size:24px;font-weight:800;color:#1B4F8A;margin-bottom:4px}
+.access-subtitle{font-size:13px;color:#6B7280;margin-bottom:24px;line-height:1.5}
+.access-input-wrap{position:relative;margin-bottom:14px}
+.access-input{width:100%;border:2px solid #E5E7EB;border-radius:12px;padding:14px 16px;font-size:18px;font-weight:700;text-align:center;letter-spacing:4px;outline:none;font-family:inherit;transition:.2s;text-transform:uppercase}
+.access-input:focus{border-color:#1B4F8A;box-shadow:0 0 0 3px rgba(27,79,138,.15)}
+.access-input.error{border-color:#DC2626;animation:shake .3s}
+.access-input.success{border-color:#16A34A}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.access-btn{width:100%;background:linear-gradient(135deg,#F97316,#EA580C);border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:700;color:#0F2340;cursor:pointer;font-family:inherit;transition:.15s;margin-bottom:10px}
+.access-btn:hover{opacity:.9}
+.access-error{font-size:12px;color:#DC2626;margin-top:4px;display:none}
+.access-hint{font-size:11px;color:#9CA3AF;margin-top:12px;line-height:1.5}
+.access-sparkle{color:#F59E0B;font-size:14px}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,#4F46E5,#3730A3);box-shadow:0 4px 24px rgba(0,0,0,.25)}
+.header-inner{max-width:920px;margin:0 auto;padding:16px 14px 0}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.brand-sub{font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.4);text-transform:uppercase;margin-bottom:4px}
+.formula-name{font-size:19px;font-weight:800;color:#fff;cursor:pointer;display:flex;align-items:center;gap:7px}
+.formula-input{background:transparent;border:none;border-bottom:2px solid rgba(255,255,255,.5);outline:none;color:#fff;font-size:19px;font-weight:800;width:260px;padding:2px 0;font-family:inherit}
+.header-controls{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.lot-box{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:6px 11px;display:flex;align-items:center;gap:7px}
+.lot-label{font-size:10px;color:rgba(255,255,255,.5);letter-spacing:1.5px;text-transform:uppercase}
+.lot-input{background:transparent;border:none;outline:none;color:#fff;font-size:17px;font-weight:800;width:60px;text-align:right;font-family:inherit}
+.lot-input::placeholder{color:rgba(255,255,255,.3);font-weight:400}
+.lot-unit{color:rgba(255,255,255,.4);font-size:12px}
+.btn{border:none;border-radius:9px;padding:8px 13px;cursor:pointer;font-size:12px;font-weight:600;font-family:inherit;transition:.15s}
+.btn-lib{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff}
+.btn-save{background:linear-gradient(135deg,#EC4899,#DB2777);color:#fff}
+.btn-saved{background:linear-gradient(135deg,#059669,#047857);color:#fff}
+.btn-export{background:linear-gradient(135deg,#F97316,#EA580C);color:#fff}
+.btn-reset{background:transparent;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.4)}
+
+/* FORMULA TYPE SELECTOR */
+.type-bar{display:flex;gap:6px;flex-wrap:wrap;padding:10px 14px;background:rgba(0,0,0,.15);border-radius:0}
+.type-btn{border:none;border-radius:20px;padding:6px 13px;cursor:pointer;font-size:12px;font-weight:600;font-family:inherit;background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);transition:.15s;white-space:nowrap}
+.type-btn.active{background:#F97316;color:#fff}
+
+/* PROGRESS */
+.progress-bar-wrap{background:rgba(255,255,255,.07);border-radius:12px 12px 0 0;padding:11px 14px}
+.progress-legend{display:flex;justify-content:space-between;margin-bottom:6px;align-items:center;flex-wrap:wrap;gap:5px}
+.progress-dots{display:flex;gap:10px;flex-wrap:wrap}
+.progress-dot{font-size:11px;color:rgba(255,255,255,.4);display:flex;align-items:center;gap:4px}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.progress-status{font-size:11px;font-weight:700}
+.progress-track{height:7px;background:rgba(255,255,255,.08);border-radius:4px;display:flex;overflow:hidden}
+.progress-seg{height:100%;transition:width .3s;flex-shrink:0}
+.progress-over{height:100%;flex:1;background:repeating-linear-gradient(45deg,#DC2626 0,#DC2626 4px,#FCA5A5 4px,#FCA5A5 8px)}
+
+/* PH BAR */
+.ph-bar{background:rgba(255,255,255,.07);padding:8px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ph-label{font-size:10px;color:rgba(255,255,255,.5);letter-spacing:2px;text-transform:uppercase;flex-shrink:0}
+.ph-track{flex:1;min-width:120px;height:10px;border-radius:5px;background:linear-gradient(90deg,#DC2626 0%,#F59E0B 20%,#84CC16 40%,#22C55E 55%,#0891B2 70%,#7C3AED 85%,#DC2626 100%);position:relative;overflow:visible}
+.ph-indicator{position:absolute;top:-4px;width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid #4F46E5;transform:translateX(-50%);transition:left .4s;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.ph-value{font-size:14px;font-weight:800;color:#fff;min-width:40px;text-align:center}
+.ph-target{font-size:10px;color:rgba(255,255,255,.45)}
+
+/* ERROR */
+.error-banner{max-width:920px;margin:0 auto;background:#FEE2E2;border-left:5px solid #DC2626;padding:11px 18px;display:flex;gap:10px;align-items:center}
+.error-banner b{font-size:13px;color:#991B1B;display:block}
+.error-banner span{font-size:12px;color:#B91C1C}
+
+/* CONTENT */
+.content{max-width:920px;margin:0 auto;padding:14px 10px 40px;display:flex;flex-direction:column;gap:13px}
+
+/* PHASE CARD */
+.phase-card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.06)}
+.phase-header{padding:10px 15px;display:flex;align-items:center;justify-content:space-between}
+.phase-title{display:flex;align-items:center;gap:7px}
+.phase-icon{font-size:15px}
+.phase-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.phase-total{display:flex;gap:14px;align-items:center}
+.phase-pct{font-size:19px;font-weight:900}
+.phase-pct-unit{font-size:11px;color:#9CA3AF}
+.phase-grams{font-size:12px;color:#9CA3AF;min-width:50px;text-align:right}
+
+/* COL HEADERS */
+.col-headers{display:grid;grid-template-columns:minmax(0,1fr) 62px 68px 28px;gap:5px;padding:6px 13px 3px;border-bottom:1px solid #F3F4F6}
+.col-h{font-size:10px;font-weight:700;letter-spacing:1.5px;color:#CBD5E1;text-transform:uppercase}
+.col-h.right{text-align:right}
+
+/* WATER ROW */
+.water-row{display:grid;grid-template-columns:minmax(0,1fr) 62px 68px 28px;gap:5px;padding:4px 13px;align-items:center;border-bottom:1px solid #E0F7FA;background:#F0FDFF}
+.water-label{display:flex;align-items:center;gap:6px;padding:4px 8px;background:#E0F7FA;border:1.5px solid #67E8F9;border-radius:8px;min-height:30px}
+.water-name{font-size:12px;font-weight:600;color:#0891B2;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.water-badge{font-size:9px;background:#0891B2;color:#fff;padding:2px 4px;border-radius:3px;font-weight:700;flex-shrink:0}
+.water-pct{text-align:right;font-size:13px;font-weight:700}
+.water-g{text-align:right;font-size:11px;font-weight:600;color:#374151;white-space:nowrap}
+
+/* INGREDIENT ROW */
+.ing-row{display:grid;grid-template-columns:minmax(0,1fr) 62px 68px 28px;gap:5px;padding:4px 13px;align-items:center}
+
+/* LIMIT WARNING */
+.limit-warn{grid-column:1/-1;font-size:10px;padding:2px 8px 4px;color:#D97706;display:flex;align-items:center;gap:4px}
+.limit-err{color:#DC2626}
+
+/* DROPDOWN */
+.dd-wrap{position:relative;min-width:0}
+.dd-trigger{display:flex;align-items:center;gap:5px;cursor:pointer;padding:4px 8px;border:1.5px solid #E5E7EB;border-radius:7px;font-size:12px;color:#9CA3AF;min-height:30px;background:#FAFAFA;user-select:none;-webkit-user-select:none;width:100%;font-family:inherit;transition:.15s}
+.dd-trigger.has-value{color:#111827;font-weight:500}
+.dd-trigger.warn-border{border-color:#F59E0B!important}
+.dd-trigger.err-border{border-color:#DC2626!important}
+.dd-arrow{font-size:8px;flex-shrink:0}
+.dd-text{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dd-panel{position:fixed;z-index:9999;background:#fff;border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,.18);overflow:hidden}
+.dd-search-wrap{padding:6px 7px;border-bottom:2px solid #eee}
+.dd-search{width:100%;border:none;border-radius:6px;padding:5px 8px;font-size:16px;outline:none;background:#F9FAFB;font-family:inherit}
+.dd-group-header{padding:6px 12px;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;background:#F8FAFC;color:#94A3B8;border-bottom:1px solid #F1F5F9}
+.dd-list{max-height:240px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.dd-item{padding:9px 12px;cursor:pointer;font-size:13px;color:#111827;border-bottom:1px solid #F7F7F7;display:flex;align-items:center;gap:6px}
+.dd-item:hover,.dd-item.selected{background:#F0FDFF}
+.dd-item-limit{font-size:10px;color:#9CA3AF;margin-left:auto;flex-shrink:0}
+.dd-empty{padding:14px;text-align:center;color:#9CA3AF;font-size:13px}
+.dd-add{padding:9px 12px;cursor:pointer;font-size:13px;font-weight:600;border-top:1px solid #eee}
+.dd-clear{padding:8px 12px;cursor:pointer;font-size:12px;color:#9CA3AF;font-style:italic;border-bottom:1px solid #F0F0F0}
+
+/* PCT INPUT */
+.pct-wrap{display:flex;align-items:center;justify-content:flex-end;gap:2px}
+.pct-input{width:48px;text-align:right;border:1.5px solid #E5E7EB;border-radius:7px;padding:4px 4px;font-size:15px;font-weight:700;outline:none;background:#fff;font-family:inherit;transition:.15s;color:#374151}
+.pct-input::placeholder{color:#CBD5E1;font-weight:400}
+.pct-input::placeholder{color:#CBD5E1;font-weight:400}
+.pct-unit{font-size:10px;color:#9CA3AF}
+.grams-cell{text-align:right;font-size:11px;font-weight:600;color:#E5E7EB;white-space:nowrap}
+.grams-cell.active{color:#374151}
+.del-btn{background:transparent;border:none;cursor:pointer;color:#E2E8F0;font-size:15px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:.15s;font-family:inherit}
+.del-btn:hover{background:#FEE2E2;color:#DC2626}
+.add-row{padding:6px 13px 11px}
+.add-btn{width:100%;border-radius:8px;padding:7px;font-size:12px;font-weight:600;letter-spacing:.5px;cursor:pointer;font-family:inherit;transition:.15s}
+
+/* PH CARD */
+.ph-card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.06);border:2px solid #C7D2FE}
+.ph-card-header{background:linear-gradient(90deg,#EEF2FF,#C7D2FE);padding:10px 15px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #E0E7FF}
+.ph-card-title{font-size:11px;font-weight:700;letter-spacing:2px;color:#4F46E5;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.ph-card-body{padding:14px 15px;display:flex;flex-direction:column;gap:10px}
+.ph-range-track{height:16px;border-radius:8px;background:linear-gradient(90deg,#DC2626 0%,#F59E0B 15%,#84CC16 35%,#22C55E 50%,#0891B2 70%,#7C3AED 90%,#DC2626 100%);position:relative}
+.ph-range-indicator{position:absolute;top:-4px;width:24px;height:24px;border-radius:50%;background:#fff;border:3px solid #4F46E5;transform:translateX(-50%);transition:left .4s;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.ph-scale{display:flex;justify-content:space-between;margin-top:4px;font-size:10px;color:#9CA3AF}
+.ph-info{display:flex;gap:10px;flex-wrap:wrap}
+.ph-info-box{flex:1;min-width:120px;background:#F8FAFC;border-radius:8px;padding:8px 10px;border:1px solid #E2E8F0}
+.ph-info-label{font-size:10px;color:#6B7280;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px}
+.ph-info-value{font-size:14px;font-weight:700;color:#111827}
+.ph-alert{background:#FEF9C3;border:1px solid #FDE047;border-radius:8px;padding:8px 10px;font-size:12px;color:#854D0E;display:flex;gap:6px;align-items:center}
+.ph-ok{background:#DCFCE7;border:1px solid #86EFAC;border-radius:8px;padding:8px 10px;font-size:12px;color:#14532D;display:flex;gap:6px;align-items:center}
+
+/* SUMMARY */
+.summary{border-radius:14px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.summary-phases{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.summary-phase{text-align:center;min-width:48px}
+.summary-phase-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:1px}
+.summary-phase-pct{font-size:17px;font-weight:900}
+.summary-phase-g{font-size:10px;color:#9CA3AF}
+.summary-total{text-align:center}
+.summary-status{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:3px}
+.summary-big{font-size:32px;font-weight:900;line-height:1}
+.summary-weight{font-size:11px;color:#6B7280;margin-top:2px}
+
+/* SAVED FORMULAS */
+.saved-modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:1000;display:flex;align-items:flex-end;justify-content:center}
+.saved-modal{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:600px;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 -10px 40px rgba(0,0,0,.2)}
+.saved-header{background:linear-gradient(135deg,#EC4899,#DB2777);padding:18px 18px 14px;color:#fff;border-radius:20px 20px 0 0;display:flex;justify-content:space-between;align-items:flex-start}
+.saved-title{font-size:16px;font-weight:800}
+.saved-sub{font-size:11px;color:rgba(255,255,255,.55);margin-top:2px}
+.saved-list{overflow-y:auto;flex:1;padding:8px}
+.saved-item{background:#F8FAFC;border-radius:12px;padding:12px 14px;margin-bottom:8px;cursor:pointer;border:1.5px solid #E2E8F0;transition:.15s}
+.saved-item:hover{border-color:#7C3AED;background:#F5F3FF}
+.saved-item-name{font-size:14px;font-weight:700;color:#111827}
+.saved-item-meta{font-size:11px;color:#6B7280;margin-top:2px;display:flex;gap:8px}
+.saved-item-type{font-size:10px;background:#E0E7FF;color:#4F46E5;padding:2px 7px;border-radius:20px;font-weight:600}
+.saved-item-actions{display:flex;gap:6px;margin-top:8px}
+.btn-load{background:#7C3AED;color:#fff;border:none;border-radius:7px;padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn-del-saved{background:transparent;color:#DC2626;border:1px solid #FECACA;border-radius:7px;padding:5px 10px;font-size:12px;cursor:pointer;font-family:inherit}
+.saved-empty{padding:40px;text-align:center;color:#9CA3AF;font-size:14px}
+.btn-save-current{background:linear-gradient(135deg,#EC4899,#DB2777);color:#fff;border:none;border-radius:10px;padding:11px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;margin:0 8px 10px}
+
+/* LIBRARY MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:1000;display:flex;align-items:center;justify-content:center;padding:14px}
+.modal-box{background:#fff;border-radius:20px;width:100%;max-width:620px;max-height:88vh;display:flex;flex-direction:column;box-shadow:0 40px 100px rgba(0,0,0,.3);overflow:hidden}
+.modal-header{background:linear-gradient(135deg,#4F46E5,#3730A3);padding:18px 18px 0;color:#fff}
+.modal-header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:11px}
+.modal-subtitle{font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.45);text-transform:uppercase;margin-bottom:4px}
+.modal-title{font-size:17px;font-weight:800}
+.modal-count{font-size:11px;color:rgba(255,255,255,.45);margin-top:2px}
+.modal-btns{display:flex;gap:7px;align-items:center}
+.btn-add-lib{background:linear-gradient(135deg,#F97316,#EA580C);border:none;border-radius:8px;padding:6px 12px;color:#fff;cursor:pointer;font-size:12px;font-weight:700;font-family:inherit}
+.btn-close{background:rgba(255,255,255,.15);border:none;border-radius:50%;width:30px;height:30px;color:#fff;cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;font-family:inherit}
+.modal-search{width:100%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);border-radius:9px;padding:8px 12px;color:#fff;font-size:13px;outline:none;font-family:inherit}
+.modal-search::placeholder{color:rgba(255,255,255,.4)}
+.modal-tabs{display:flex;margin-top:11px}
+.modal-tab{flex:1;padding:8px 5px;border:none;cursor:pointer;background:transparent;font-size:11px;font-weight:500;color:rgba(255,255,255,.55);font-family:inherit;transition:.15s}
+.modal-tab.active{background:#fff;border-radius:9px 9px 0 0;font-weight:700}
+.lib-group-header{padding:7px 14px;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid #F1F5F9;display:flex;align-items:center;gap:6px}
+.lib-list{overflow-y:auto;flex:1}
+.lib-item{display:flex;align-items:center;padding:9px 16px;border-bottom:1px solid #F9FAFB}
+.lib-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-right:11px}
+.lib-info{flex:1}
+.lib-name{font-size:13px;font-weight:600;color:#111827;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.lib-note{font-size:11px;color:#9CA3AF;margin-top:1px}
+.lib-limit{font-size:10px;background:#FEF3C7;color:#92400E;padding:2px 6px;border-radius:10px;font-weight:600;flex-shrink:0}
+.lib-badge-custom{font-size:9px;background:#DCFCE7;color:#14532D;padding:2px 6px;border-radius:20px;font-weight:700}
+.lib-phase-badge{font-size:10px;padding:2px 7px;border-radius:20px;font-weight:700;margin-right:7px;flex-shrink:0}
+.del-lib-btn{background:transparent;border:none;cursor:pointer;color:#D1D5DB;font-size:14px;padding:2px 4px;border-radius:4px;transition:.15s;font-family:inherit;flex-shrink:0}
+.del-lib-btn:hover{color:#DC2626}
+.add-form{background:#FFFBEB;border-bottom:2px solid #FCD34D;padding:13px 15px;display:flex;flex-direction:column;gap:8px}
+.add-form-title{font-size:11px;font-weight:700;color:#78350F;letter-spacing:1px;text-transform:uppercase}
+.add-form-row{display:flex;gap:6px;flex-wrap:wrap}
+.add-select{border:1.5px solid #FCD34D;border-radius:8px;padding:6px 8px;font-size:12px;outline:none;background:#fff;font-weight:600;color:#374151;cursor:pointer;font-family:inherit}
+.add-input{flex:1;min-width:120px;border:1.5px solid #FCD34D;border-radius:8px;padding:6px 8px;font-size:13px;outline:none;font-family:inherit}
+.add-form-btns{display:flex;gap:6px}
+.btn-confirm{border:none;border-radius:8px;padding:6px 14px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+.btn-cancel{background:transparent;border:1px solid #E5E7EB;border-radius:8px;padding:6px 11px;font-size:13px;color:#6B7280;cursor:pointer;font-family:inherit}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;box-shadow:0 8px 32px rgba(0,0,0,.3);z-index:2000;white-space:nowrap}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+// ═══════════════════════════════════════════════════════════════
+// FORMULA TYPES
+// ═══════════════════════════════════════════════════════════════
+const FORMULA_TYPES = {
+  LEAVE_IN:   {label:"Leave-in Spray",  icon:"💦", hasWater:true,  phases:["AQUEUSE","HUILEUSE","REFROIDISSEMENT"], phTarget:[4.5,6.0], defaultWeight:0},
+  CONDITIONER:{label:"Conditionner",    icon:"🧴", hasWater:true,  phases:["AQUEUSE","HUILEUSE","REFROIDISSEMENT"], phTarget:[4.0,5.5], defaultWeight:0},
+  MASQUE:     {label:"Masque",          icon:"🌿", hasWater:true,  phases:["AQUEUSE","HUILEUSE","REFROIDISSEMENT"], phTarget:[4.0,5.5], defaultWeight:0},
+  SHAMPOING:  {label:"Shampoing",       icon:"🚿", hasWater:true,  phases:["AQUEUSE","HUILEUSE","REFROIDISSEMENT"], phTarget:[5.0,6.5], defaultWeight:0},
+  LAIT:       {label:"Lait Capillaire", icon:"🥛", hasWater:true,  phases:["AQUEUSE","HUILEUSE","REFROIDISSEMENT"], phTarget:[4.5,6.0], defaultWeight:0},
+  CREME:      {label:"Crème Capillaire",icon:"🍦", hasWater:true,  phases:["AQUEUSE","HUILEUSE","REFROIDISSEMENT"], phTarget:[4.5,6.0], defaultWeight:0},
+  LOTION:     {label:"Lotion Capillaire",icon:"💧",hasWater:true,  phases:["AQUEUSE","HUILEUSE","REFROIDISSEMENT"], phTarget:[4.5,6.5], defaultWeight:0},
+  HUILE:      {label:"Huile Capillaire",icon:"🫙", hasWater:false, phases:["HUILEUSE"],                            phTarget:null,      defaultWeight:0},
+  BAUME:      {label:"Baume Capillaire",icon:"🟫", hasWater:false, phases:["HUILEUSE","REFROIDISSEMENT"],          phTarget:null,      defaultWeight:0},
+  CHANTILLY:  {label:"Beurre Chantilly",icon:"☁️", hasWater:false, phases:["HUILEUSE","REFROIDISSEMENT"],          phTarget:null,      defaultWeight:0},
+  SERUM:      {label:"Sérum Capillaire",icon:"⚗️", hasWater:true,  phases:["AQUEUSE","REFROIDISSEMENT"],           phTarget:[4.5,6.0], defaultWeight:0},
+  CUSTOM:     {label:"Personnalisée",   icon:"✨", hasWater:true,  phases:["AQUEUSE","HUILEUSE","REFROIDISSEMENT"], phTarget:null,      defaultWeight:0},
+};
+
+// ═══════════════════════════════════════════════════════════════
+// LIBRARY WITH GROUPS & LIMITS
+// ═══════════════════════════════════════════════════════════════
+const LIBRARY = {
+  AQUEUSE: {
+    "Tensioactifs": [
+      {name:"Texapon N70",                    note:"SLES 70%, moussant doux, nettoyant polyvalent — BASF", minPct:5, maxPct:20},
+      {name:"Texapon NSO",                    note:"SLES liquide, moussant, formules shampoing", minPct:5, maxPct:20},
+      {name:"Texapon ASV",                    note:"AOS — Tensioactif doux, bonne mousse froide", minPct:5, maxPct:15},
+      {name:"Cocamidopropyl Bétaïne (CAPB)",     note:"Amphotère, doux, épaississant mousse", maxPct:10},
+      {name:"Coco Glucoside",                    note:"Naturel, très doux, bonne mousse", maxPct:15},
+      {name:"Decyl Glucoside",                   note:"Naturel, doux, pour peaux sensibles", maxPct:15},
+      {name:"Lauryl Glucoside",                  note:"Naturel, bon pouvoir moussant", maxPct:15},
+      {name:"Sodium Cocoyl Isethionate (SCI)",   note:"Solide ou poudre, ultra doux, riche mousse", maxPct:40},
+      {name:"Disodium Cocoamphodiacetate",        note:"Amphotère doux, anti-irritant", maxPct:10},
+      {name:"Cocamide DEA",                      note:"Épaississant mousse, stabilisant", maxPct:5},
+      {name:"PEG-7 Glyceryl Cocoate",            note:"Émulsifiant doux, conditionneur", maxPct:5},
+      {name:"Sodium Cocoyl Glutamate",           note:"Aminoacide, très doux, pH compatible", maxPct:20, warnMsg:"Actif à pH 5-7"},
+      {name:"Sodium Lauroyl Sarcosinate",        note:"Doux, conditionneur, anti-résidu", maxPct:15},
+      {name:"Betaine (tensioactive)",             note:"Amphotère naturelle, mousse stable", maxPct:10},
+    ],
+    "Macérats & Poudres Indiennes": [
+      {name:"Macérat de Shikakai",         note:"Nettoyant doux naturel, brillance, démêlant"},
+      {name:"Macérat de Reetha",            note:"Tensioactif naturel, moussant, anti-pelliculaire"},
+      {name:"Macérat d'Amla",              note:"Stimulant croissance, anti-chute, riche en Vit C"},
+      {name:"Macérat de Brahmi",           note:"Fortifiant, stimulant follicule, épaississement"},
+      {name:"Macérat de Bhringraj",        note:"Anti-chute puissant, repousse, brillance"},
+      {name:"Macérat de Neem",             note:"Antibactérien, anti-pelliculaire, cuir chevelu sain"},
+      {name:"Macérat de Tulsi (Basilic Sacré)", note:"Purifiant, fortifiant, anti-inflammatoire"},
+      {name:"Macérat de Methi (Fenugrec)", note:"Stimulant croissance, hydratant, brillance"},
+      {name:"Macérat de Henné Neutre",     note:"Fortifiant, gainant, brillance sans couleur"},
+      {name:"Macérat de Kalpi Tone",       note:"Mélange indien anti-chute, repousse"},
+      {name:"Macérat de Narayana",         note:"Ayurvédique, stimulant, nourrissant"},
+    ],
+    "Poudres & Herbes Capillaires": [
+      {name:"Poudre d'Amla",               note:"Riche en Vit C, anti-oxydant, stimulant croissance", maxPct:5},
+      {name:"Poudre de Shikakai",          note:"Nettoyant naturel, démêlant, brillance", maxPct:5},
+      {name:"Poudre de Reetha",            note:"Moussant naturel, anti-pelliculaire", maxPct:5},
+      {name:"Poudre de Brahmi",            note:"Fortifiante, épaississement, croissance", maxPct:5},
+      {name:"Poudre de Bhringraj",         note:"Anti-chute n°1 en Ayurveda, repousse", maxPct:5},
+      {name:"Poudre de Neem",              note:"Antibactérienne, anti-pelliculaire, purifiante", maxPct:3},
+      {name:"Poudre de Henné Neutre",      note:"Gainante, protectrice, brillance", maxPct:10},
+      {name:"Poudre de Moringa",           note:"Riche en minéraux, fortifiante, nourrissante", maxPct:5},
+      {name:"Poudre de Fenugrec",          note:"Hydratante, stimulante, glissante, anti-chute", maxPct:5},
+      {name:"Poudre d'Ortie",              note:"Riche en silice, fortifiante, anti-chute, reminéralisante", maxPct:5},
+      {name:"Poudre de Prêle",             note:"Très riche en silice, renforce la fibre, brillance", maxPct:5},
+      {name:"Poudre de Graines de Nigelle",note:"Anti-inflammatoire, croissance, thymoquinone", maxPct:3},
+      {name:"Poudre de Gingembre",         note:"Stimulant microcirculation, anti-chute, réchauffant", maxPct:3, warnMsg:"Max 3% — peut irriter le cuir chevelu sensible"},
+      {name:"Poudre d'Ail",                note:"Riche en soufre, stimulant puissant, anti-pelliculaire", maxPct:2, warnMsg:"Max 2% — odeur forte"},
+      {name:"Poudre de Clou de Girofle",   note:"Antibactérien puissant, stimulant, anti-fongique", maxPct:1, warnMsg:"Max 1% — très concentré, peut irriter"},
+      {name:"Poudre de Guimauve",          note:"Adoucissante, glissante, démêlante", maxPct:5},
+      {name:"Poudre de Romarin",           note:"Stimulante, antioxydante, brillance", maxPct:3},
+      {name:"Poudre de Lavande",           note:"Apaisante, antibactérienne, cuir chevelu sensible", maxPct:3},
+      {name:"Poudre d'Hibiscus",           note:"Brillance, définition boucles, adoucissante", maxPct:5},
+      {name:"Poudre de Kalpi Tone",        note:"Mélange anti-chute, fortifiant", maxPct:5},
+      {name:"Poudre de Tulsi",             note:"Purifiante, fortifiante, anti-microbienne", maxPct:3},
+      {name:"Poudre de Curcuma",           note:"Anti-inflammatoire, purifiant cuir chevelu", maxPct:2, warnMsg:"Peut colorer légèrement"},
+      {name:"Poudre de Sidr (Lotus Jujubier)", note:"Nettoyant naturel doux, brillance", maxPct:10},
+      {name:"Poudre de Cannelle",          note:"Stimulante, réchauffante, microcirculation", maxPct:1, warnMsg:"Max 1% — irritant à haute dose"},
+      {name:"Poudre de Poivre Noir",       note:"Stimulant circulation, repousse, réchauffant", maxPct:1, warnMsg:"Max 1% — irritant"},
+      {name:"Poudre de Cardamome",         note:"Parfum naturel, purifiant, stimulant", maxPct:2},
+      {name:"Argile Blanche (Kaolin)",     note:"Nettoyante douce, absorbante, non agressive", maxPct:10},
+      {name:"Argile Verte",                note:"Purifiante, détox cuir chevelu gras", maxPct:10},
+      {name:"Argile Rhassoul",             note:"Nettoyante naturelle, brillance, douce", maxPct:15},
+    ],
+    "Bases Aqueuses": [
+      {name:"Eau Distillée",         note:"Base aqueuse principale, neutre"},
+      {name:"Jus d'Aloe Vera",       note:"Hydratant, apaisant, démêlant naturel"},
+      {name:"Eau de Coco",           note:"Hydratante, riche en minéraux"},
+      {name:"Eau de Rose",           note:"Hydrolat adoucissant, tonifiant"},
+      {name:"Hydrolat de Lavande",   note:"Apaisant, antibactérien"},
+      {name:"Hydrolat de Romarin",   note:"Stimulant croissance, anti-chute"},
+      {name:"Hydrolat de Camomille", note:"Apaisant, anti-inflammatoire"},
+      {name:"Hydrolat de Menthe",    note:"Rafraîchissant, stimulant"},
+      {name:"Hydrolat d'Ortie",      note:"Fortifiante, riche en silice, anti-chute"},
+      {name:"Hydrolat de Hibiscus",  note:"Brillance, définition boucles, riche en AHA naturels"},
+      {name:"Hydrolat de Fenugrec",  note:"Stimulant, épaississement, croissance"},
+      {name:"Hydrolat de Romarin",   note:"Antioxydant, brillance, stimulant"},
+    ],
+    "Humectants": [
+      {name:"Glycérine Végétale",    note:"Humectant puissant", maxPct:10, warnMsg:"Max 10% — au-delà effet collant"},
+      {name:"Bétaïne",               note:"Humectant doux, anti-frisottis", maxPct:5},
+      {name:"Sodium PCA",            note:"NMF naturel, hydratation durable", maxPct:5},
+      {name:"Acide Hyaluronique",    note:"Hydratation intense", maxPct:2, warnMsg:"Max 2% — très puissant"},
+      {name:"Sodium Lactate",        note:"Humectant, ajusteur pH", maxPct:3},
+      {name:"Jus de Gombo",          note:"Humectant naturel, glissant, définition boucles", maxPct:30},
+      {name:"Gel de Gombo",          note:"Humectant gélifiant, slip, démêlant naturel", maxPct:20},
+      {name:"Gel de Lin",            note:"Humectant gélifiant, définition, anti-frisottis", maxPct:20},
+      {name:"Gel d'Aloe Vera",       note:"Hydratant, apaisant, filmogène léger", maxPct:30},
+    ],
+    "Épaississants": [
+      {name:"Gomme de Guar",         note:"Épaississant, démêlant", maxPct:1, warnMsg:"Max 1% — gel trop épais au-delà"},
+      {name:"Gomme Xanthane",        note:"Épaississant, stabilisant", maxPct:0.5},
+      {name:"Hydroxyéthylcellulose", note:"Épaississant naturel", maxPct:2},
+      {name:"Gomme de Caroube",      note:"Épaississant, effet soyeux", maxPct:1},
+    ],
+    "Actifs Capillaires": [
+      {name:"Panthenol (B5)",        note:"Hydratant, renforce la fibre", maxPct:5},
+      {name:"Niacinamide",           note:"Anti-chute, cuir chevelu sain", maxPct:5, warnMsg:"Max 5%"},
+      {name:"Biotine",               note:"Vitamine B7, croissance", maxPct:2},
+      {name:"MSM",                   note:"Soufre organique, croissance", maxPct:3},
+      {name:"Inositol",              note:"Répare et renforce la fibre", maxPct:2},
+    ],
+  },
+  HUILEUSE: {
+    "Macérats Huileux & Herbes": [
+      {name:"Macérat Huileux de Bhringraj",   note:"Anti-chute, repousse, fortifiant — infusé dans huile"},
+      {name:"Macérat Huileux de Brahmi",      note:"Fortifiant follicule, croissance, stimulant"},
+      {name:"Macérat Huileux de Neem",        note:"Antibactérien, anti-pelliculaire, cuir chevelu"},
+      {name:"Macérat Huileux d'Amla",         note:"Antioxydant, brillance, stimulant croissance"},
+      {name:"Macérat Huileux de Romarin",     note:"Stimulant microcirculation, anti-chute"},
+      {name:"Macérat Huileux d'Ortie",        note:"Fortifiant, riche en silice, anti-chute"},
+      {name:"Macérat Huileux de Prêle",       note:"Riche en silice, renforce la fibre, brillance"},
+      {name:"Macérat Huileux de Fenugrec",    note:"Stimulant, hydratant, brillance, anti-chute"},
+      {name:"Macérat Huileux de Nigelle",     note:"Anti-inflammatoire, croissance, antibactérien"},
+      {name:"Macérat Huileux de Gingembre",   note:"Stimulant puissant, microcirculation, repousse", maxPct:5, warnMsg:"Max 5% — peut irriter cuir chevelu sensible"},
+      {name:"Macérat Huileux d'Ail",          note:"Riche en soufre, anti-chute, stimulant", maxPct:3, warnMsg:"Max 3% — odeur forte"},
+      {name:"Macérat Huileux de Clou de Girofle", note:"Antibactérien, stimulant, anti-fongique", maxPct:2, warnMsg:"Max 2% — très concentré"},
+      {name:"Macérat Huileux de Piment",      note:"Stimulant circulation, repousse accélérée", maxPct:5, warnMsg:"Max 5% — très stimulant"},
+      {name:"Macérat Huileux de Lavande",     note:"Apaisant, cuir chevelu sensible, équilibrant"},
+      {name:"Macérat Huileux de Moringa",     note:"Nourrissant, protecteur, riche en minéraux"},
+      {name:"Macérat Huileux de Curcuma",     note:"Anti-inflammatoire, purifiant, cicatrisant", warnMsg:"Peut légèrement colorer"},
+      {name:"Macérat Huileux de Café",        note:"Stimulant follicule, anti-chute, antioxydant"},
+      {name:"Macérat Huileux de Cannelle",    note:"Stimulant circulation, réchauffant", maxPct:2, warnMsg:"Max 2% — irritant à haute dose"},
+      {name:"Macérat Huileux de Kalpi Tone",  note:"Mélange ayurvédique anti-chute, repousse"},
+      {name:"Macérat Huileux de Tulsi",       note:"Purifiant, fortifiant, anti-microbien"},
+      {name:"Macérat Huileux de Vanille",     note:"Adoucissant, nourrissant, parfum naturel"},
+    ],
+    "Épaississants": [
+      {name:"Cire d'Abeille",        note:"Épaississant naturel, occlusif, protecteur", maxPct:5},
+      {name:"Cire de Carnauba",      note:"Brillance intense, dure, protection", maxPct:3},
+      {name:"Cire de Candelilla",    note:"Vegan, brillance, dureté", maxPct:3},
+      {name:"Cire de Riz",           note:"Légère, brillance, non comédogène", maxPct:3},
+      {name:"Acide Stéarique",       note:"Épaississant, texture nacrée, tenue", maxPct:5},
+      {name:"Gomme de Guar (HU)",    note:"Épaississant phase huileuse", maxPct:1},
+    ],
+    "Émulsifiants": [
+      {name:"BTMS-50",               note:"Émulsifiant cationique, démêlant", minPct:2, maxPct:8, warnMsg:"Recommandé 2-8%"},
+      {name:"BTMS-25",               note:"Émulsifiant cationique léger", minPct:2, maxPct:10},
+      {name:"Polawax",               note:"Émulsifiant non-ionique", minPct:3, maxPct:10},
+      {name:"Olivem-1000",           note:"Émulsifiant naturel", minPct:3, maxPct:8},
+      {name:"Emulsifying Wax NF",    note:"Émulsifiant non-ionique", minPct:3, maxPct:10},
+    ],
+    "Alcools Gras": [
+      {name:"Alcool Cétylique",      note:"Émollient, épaississant", maxPct:5},
+      {name:"Alcool Stéarylique",    note:"Émollient lourd, crémeux", maxPct:5},
+      {name:"Alcool Cétéarylique",   note:"Mélange polyvalent", maxPct:6},
+      {name:"Acide Stéarique",       note:"Épaississant, texture nacrée", maxPct:5},
+    ],
+    "Huiles Végétales": [
+      {name:"Huile de Jojoba",       note:"Proche sébum, légère"},
+      {name:"Huile de Coco Vierge",  note:"Pénétrante, anti-casse"},
+      {name:"Huile d'Amande Douce",  note:"Émolliente, adoucissante"},
+      {name:"Huile de Ricin",        note:"Épaississante, brillance", maxPct:5, warnMsg:"Max 5% — très lourd"},
+      {name:"Huile de Baobab",       note:"Légère, vitamines A/D/E/F"},
+      {name:"Huile d'Argan",         note:"Anti-frisottis, brillance"},
+      {name:"Huile d'Avocat",        note:"Pénétrante profonde"},
+      {name:"Huile de Nigelle",      note:"Anti-inflammatoire, croissance", maxPct:3, warnMsg:"Max 3% — odeur forte"},
+      {name:"Huile de Chanvre",      note:"Oméga 3/6/9 équilibrés"},
+      {name:"Huile de Marula",       note:"Ultra légère, anti-âge"},
+      {name:"Huile de Moringa",      note:"Purifiante, légère"},
+      {name:"Huile de Camélia",      note:"Brillance, protection thermique"},
+      {name:"Huile de Pracaxi",      note:"Démêlante naturelle", maxPct:5},
+      {name:"Huile de Tamanu",       note:"Cicatrisante, cuir chevelu", maxPct:5},
+      {name:"Huile de Coco Fractionnée", note:"Ultra légère, stable"},
+    ],
+    "Beurres Végétaux": [
+      {name:"Beurre de Karité Brut", note:"Nourrissant intense, protecteur", maxPct:10},
+      {name:"Beurre de Karité Raffiné",note:"Plus léger, blanc neutre", maxPct:10},
+      {name:"Beurre de Cacao",       note:"Occlusif, fondant", maxPct:5},
+      {name:"Beurre de Mangue",      note:"Léger, non gras", maxPct:8},
+      {name:"Beurre de Cupuaçu",     note:"Hydratant intense", maxPct:8},
+      {name:"Beurre de Murumuru",    note:"Démêlant naturel", maxPct:5},
+    ],
+    "Cires": [
+      {name:"Cire d'Abeille",        note:"Épaississant, occlusif", maxPct:5},
+      {name:"Cire de Carnauba",      note:"Brillance intense, dure", maxPct:3},
+      {name:"Cire de Candelilla",    note:"Vegan, brillance", maxPct:3},
+    ],
+    "Silicones": [
+      {name:"Diméthicone",           note:"Anti-frisottis, protection thermique", maxPct:5},
+      {name:"Amodimethicone",        note:"Réparation ciblée, brillance", maxPct:3},
+    ],
+  },
+  REFROIDISSEMENT: {
+    "Conservateurs": [
+      {name:"Conservateur Leucidal SF",      note:"Naturel, fermentation, actif à froid", minPct:1, maxPct:4, warnMsg:"1-4% selon fabricant", phNote:"pH 3.5-5.0"},
+      {name:"Conservateur Leucidal Liquid",   note:"Naturel, large spectre, doux", minPct:1, maxPct:3, phNote:"pH 3.5-5.5"},
+      {name:"Conservateur Geogard ECT",       note:"Large spectre, naturel, COSMOS validé", minPct:0.5, maxPct:1.5, phNote:"pH 3.0-6.0"},
+      {name:"Conservateur Optiphen Plus",     note:"Large spectre, stable émulsions", minPct:0.75, maxPct:1.5, phNote:"pH 4.0-8.0"},
+      {name:"Conservateur Optiphen NDG",      note:"Naturel dérivé, sans phénoxyéthanol", minPct:0.5, maxPct:1.5},
+      {name:"Phénoxyéthanol",                 note:"Synthétique efficace, large usage", minPct:0.5, maxPct:1, warnMsg:"Max 1% — réglementation EU", phNote:"pH 3.0-10.0"},
+      {name:"Éthylhexylglycérine",            note:"Booster conservateur, conditionneur doux", maxPct:1},
+      {name:"Benzoate de Sodium",             note:"Naturel, anti-fongique, anti-levures", minPct:0.1, maxPct:0.5, warnMsg:"Actif sous pH 5 uniquement", phNote:"pH < 5.0"},
+      {name:"Sorbate de Potassium",           note:"Naturel, anti-moisissures, anti-levures", minPct:0.1, maxPct:0.3, warnMsg:"Actif sous pH 5.5 uniquement", phNote:"pH < 5.5"},
+      {name:"Benzoate + Sorbate (combo)",     note:"Synergie naturelle très efficace", minPct:0.3, maxPct:0.8, warnMsg:"pH < 5 obligatoire pour l'efficacité"},
+      {name:"Acide Benzoïque",                note:"Précurseur naturel, anti-fongique", minPct:0.1, maxPct:0.5, phNote:"pH < 5.0"},
+      {name:"Acide Sorbique",                 note:"Naturel, anti-levures, anti-moisissures", minPct:0.1, maxPct:0.3, phNote:"pH < 6.0"},
+      {name:"Naticide (Parfum Conservateur)", note:"Naturel, odeur amande, large spectre", minPct:0.5, maxPct:1, warnMsg:"Max 1% — peut parfumer"},
+      {name:"Rokonsal BSB-N",                 note:"Naturel, benzylalcool + acide benzoïque", minPct:0.5, maxPct:1.5},
+      {name:"Cosgard (Benzylalcool + DHA)",   note:"Naturel, COSMOS, large spectre", minPct:0.6, maxPct:1, phNote:"pH 3.0-7.0"},
+      {name:"Benzylalcool",                   note:"Naturel, anti-bactérien, souvent associé", minPct:0.5, maxPct:1},
+      {name:"Acide Déhydroacétique (DHA)",    note:"Naturel, anti-fongique, anti-levures", minPct:0.1, maxPct:0.6, phNote:"pH < 7.0"},
+      {name:"Acide Lactique (conservateur)",  note:"Acidifiant et conservateur naturel", minPct:0.1, maxPct:0.5, phNote:"Baisse le pH"},
+    ],
+    "Protéines": [
+      {name:"Protéines de Riz",      note:"Renforce fibre, anti-casse", maxPct:5},
+      {name:"Protéines de Soie",     note:"Brillance, lissage", maxPct:5},
+      {name:"Protéines de Kératine", note:"Reconstruction capillaire", maxPct:5},
+      {name:"Protéines de Blé",      note:"Pénétrantes, renfort", maxPct:5},
+      {name:"Protéines de Quinoa",   note:"Riches en acides aminés", maxPct:5},
+      {name:"Élastine Végétale",     note:"Élasticité, rebond boucles", maxPct:3},
+    ],
+    "Conditionneurs": [
+      {name:"Honeyquat",             note:"Conditionneur cationique naturel", maxPct:3},
+      {name:"Polyquaternium-7",      note:"Démêlant, anti-statique", maxPct:2},
+      {name:"Polyquaternium-10",     note:"Conditionneur filmogène", maxPct:2},
+      {name:"Behentrimonium Chloride",note:"Conditionneur fort, démêlant", maxPct:3},
+    ],
+    "Actifs & Vitamines": [
+      {name:"Vitamine E (Tocophérol)",note:"Antioxydant, conservateur naturel", maxPct:1},
+      {name:"Provitamine B5",        note:"Hydratant profond, renforce", maxPct:5},
+      {name:"Zinc PCA",              note:"Séborégulateur", maxPct:2},
+      {name:"Squalane",              note:"Léger, anti-oxydant", maxPct:5},
+      {name:"Biotine (B7)",          note:"Croissance, fortifiant", maxPct:2},
+      {name:"Ceramides Végétaux",    note:"Reconstruction cuticule", maxPct:3},
+      {name:"Extrait de Caféine",    note:"Stimulant follicule, anti-chute", maxPct:2},
+      {name:"Extrait de Ginseng",    note:"Tonique, croissance", maxPct:3},
+    ],
+    "Ajusteurs pH": [
+      {name:"Acide Citrique",        note:"Ajusteur pH vers l'acide", maxPct:0.5, warnMsg:"Utiliser avec précaution — très acide", phNote:"Baisse le pH"},
+      {name:"Acide Lactique",        note:"AHA doux, exfoliation", maxPct:0.5, phNote:"Baisse le pH"},
+    ],
+    "Huiles Essentielles": [
+      {name:"HE Lavande",            note:"Calmante, cuir chevelu sensible", maxPct:1, warnMsg:"Max 1% — irritant au-delà"},
+      {name:"HE Romarin",            note:"Stimulante, anti-chute", maxPct:1, warnMsg:"Max 1%"},
+      {name:"HE Tea Tree",           note:"Antibactérienne, pellicules", maxPct:1, warnMsg:"Max 1%"},
+      {name:"HE Menthe Poivrée",     note:"Stimulante, fraîcheur", maxPct:0.5, warnMsg:"Max 0.5% — très puissant"},
+      {name:"HE Ylang-Ylang",        note:"Séborégulateur, cheveux gras", maxPct:0.5},
+      {name:"HE Cèdre de l'Atlas",   note:"Anti-chute, fortifiant", maxPct:1},
+      {name:"Fragrance (Parfum)",    note:"Parfum cosmétique", maxPct:2, warnMsg:"Max 2%"},
+    ],
+  }
+};
+
+// Flat lookup
+function getIngredientData(name){
+  for(const [phase, groups] of Object.entries(LIBRARY)){
+    for(const [group, items] of Object.entries(groups)){
+      const found = items.find(i=>i.name===name);
+      if(found) return {...found, phase, group};
+    }
+  }
+  return null;
+}
+
+const PHASES = {
+  AQUEUSE:       {label:"Phase Aqueuse",       short:"AQ",color:"#0E7490",light:"#ECFEFF",mid:"#22D3EE",accent:"#164E63",icon:"💧",hbg:"linear-gradient(90deg,#CFFAFE,#E0F7FA)",stripe:"#F0FDFF"},
+  HUILEUSE:      {label:"Phase Huileuse",      short:"HU",color:"#EA580C",light:"#FFF7ED",mid:"#FB923C",accent:"#7C2D12",icon:"🌿",hbg:"linear-gradient(90deg,#FEF3C7,#FFFBEB)",stripe:"#FFF8F5"},
+  REFROIDISSEMENT:{label:"Phase Refroidissement",short:"RF",color:"#059669",light:"#ECFDF5",mid:"#34D399",accent:"#064E3B",icon:"❄️",hbg:"linear-gradient(90deg,#DCFCE7,#F0FFF4)",stripe:"#F0FDF4"},
+};
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  formulaType: "LEAVE_IN",
+  formulaName: "",
+  editingName: false,
+  totalWeight: 0,
+  phases: {
+    AQUEUSE:       [{id:1,name:"Jus d'Aloe Vera",pct:""},{id:2,name:"Hydrolat de Romarin",pct:""},{id:3,name:"Glycérine Végétale",pct:""}],
+    HUILEUSE:      [{id:1,name:"BTMS-50",pct:""},{id:2,name:"Huile de Jojoba",pct:""},{id:3,name:"Alcool Cétylique",pct:""}],
+    REFROIDISSEMENT:[{id:1,name:"Conservateur Leucidal SF",pct:""},{id:2,name:"",pct:""}],
+  },
+  library: deepClone(LIBRARY),
+  // UI
+  showCustomModal: false,
+  customHasWater: true,
+  customPhases: {AQUEUSE:true, HUILEUSE:true, REFROIDISSEMENT:true},
+  showSaved: false,
+  libTab: "AQUEUSE",
+  libSearch: "",
+  libAdding: false,
+  libNewName: "", libNewNote: "", libNewPhase: "AQUEUSE", libNewGroup: "",
+  openDropdown: null,
+  dropPos: {top:0,left:0,width:0},
+  ddSearch: "",
+  toast: null,
+  toastTimer: null,
+  // Saved formulas
+  savedFormulas: loadSaved(),
+};
+
+function defaultPhases(typeKey){
+  const type = FORMULA_TYPES[typeKey];
+  const p = {};
+
+  // ── AQUEUSE ─────────────────────────────────────────────────
+  if(type.phases.includes("AQUEUSE")){
+    if(typeKey==="LEAVE_IN")
+      p.AQUEUSE=[{id:1,name:"Jus d'Aloe Vera",pct:""},{id:2,name:"Hydrolat de Romarin",pct:""},{id:3,name:"Glycérine Végétale",pct:""}];
+    else if(typeKey==="CONDITIONER")
+      p.AQUEUSE=[{id:1,name:"Jus d'Aloe Vera",pct:""},{id:2,name:"Hydrolat de Lavande",pct:""},{id:3,name:"Glycérine Végétale",pct:""}];
+    else if(typeKey==="MASQUE")
+      p.AQUEUSE=[{id:1,name:"Gel d'Aloe Vera",pct:""},{id:2,name:"Hydrolat de Romarin",pct:""},{id:3,name:"Glycérine Végétale",pct:""}];
+    else if(typeKey==="SHAMPOING")
+      p.AQUEUSE=[{id:1,name:"Coco Glucoside",pct:""},{id:2,name:"Cocamidopropyl Bétaïne (CAPB)",pct:""},{id:3,name:"Glycérine Végétale",pct:""}];
+    else if(typeKey==="LAIT")
+      p.AQUEUSE=[{id:1,name:"Jus d'Aloe Vera",pct:""},{id:2,name:"Hydrolat de Lavande",pct:""},{id:3,name:"Sodium PCA",pct:""}];
+    else if(typeKey==="CREME")
+      p.AQUEUSE=[{id:1,name:"Jus d'Aloe Vera",pct:""},{id:2,name:"Hydrolat de Romarin",pct:""},{id:3,name:"Glycérine Végétale",pct:""}];
+    else if(typeKey==="LOTION")
+      p.AQUEUSE=[{id:1,name:"Jus d'Aloe Vera",pct:""},{id:2,name:"Hydrolat de Camomille",pct:""},{id:3,name:"Bétaïne",pct:""}];
+    else if(typeKey==="SERUM")
+      p.AQUEUSE=[{id:1,name:"Acide Hyaluronique",pct:""},{id:2,name:"Hydrolat de Romarin",pct:""},{id:3,name:"Niacinamide",pct:""}];
+    else
+      p.AQUEUSE=[{id:1,name:"Glycérine Végétale",pct:""},{id:2,name:"Hydrolat de Romarin",pct:""},{id:3,name:"Jus d'Aloe Vera",pct:""}];
+  }
+
+  // ── HUILEUSE ────────────────────────────────────────────────
+  if(type.phases.includes("HUILEUSE")){
+    if(typeKey==="LEAVE_IN")
+      p.HUILEUSE=[{id:1,name:"BTMS-50",pct:""},{id:2,name:"Huile de Jojoba",pct:""},{id:3,name:"Alcool Cétylique",pct:""}];
+    else if(typeKey==="CONDITIONER")
+      p.HUILEUSE=[{id:1,name:"BTMS-50",pct:""},{id:2,name:"Beurre de Karité Brut",pct:""},{id:3,name:"Huile d'Argan",pct:""}];
+    else if(typeKey==="MASQUE")
+      p.HUILEUSE=[{id:1,name:"BTMS-50",pct:""},{id:2,name:"Beurre de Karité Brut",pct:""},{id:3,name:"Huile de Pracaxi",pct:""}];
+    else if(typeKey==="SHAMPOING")
+      p.HUILEUSE=[{id:1,name:"Coco Glucoside",pct:""},{id:2,name:"Huile de Coco Fractionnée",pct:""},{id:3,name:"Acide Stéarique",pct:""}];
+    else if(typeKey==="LAIT")
+      p.HUILEUSE=[{id:1,name:"BTMS-25",pct:""},{id:2,name:"Huile de Jojoba",pct:""},{id:3,name:"Alcool Cétylique",pct:""}];
+    else if(typeKey==="CREME")
+      p.HUILEUSE=[{id:1,name:"BTMS-50",pct:""},{id:2,name:"Beurre de Mangue",pct:""},{id:3,name:"Huile de Coco Vierge",pct:""}];
+    else if(typeKey==="LOTION")
+      p.HUILEUSE=[{id:1,name:"Olivem-1000",pct:""},{id:2,name:"Huile de Jojoba",pct:""},{id:3,name:"Alcool Cétylique",pct:""}];
+    else if(typeKey==="HUILE")
+      p.HUILEUSE=[{id:1,name:"Huile de Jojoba",pct:""},{id:2,name:"Huile d'Argan",pct:""},{id:3,name:"Huile de Nigelle",pct:""}];
+    else if(typeKey==="BAUME")
+      p.HUILEUSE=[{id:1,name:"Beurre de Karité Brut",pct:""},{id:2,name:"Cire d'Abeille",pct:""},{id:3,name:"Huile de Coco Vierge",pct:""}];
+    else if(typeKey==="CHANTILLY")
+      p.HUILEUSE=[{id:1,name:"Beurre de Karité Brut",pct:""},{id:2,name:"Beurre de Mangue",pct:""},{id:3,name:"Huile de Coco Vierge",pct:""}];
+    else if(typeKey==="CUSTOM")
+      p.HUILEUSE=[{id:1,name:"",pct:""},{id:2,name:"",pct:""},{id:3,name:"",pct:""}];
+    else
+      p.HUILEUSE=[{id:1,name:"BTMS-50",pct:""},{id:2,name:"Huile de Jojoba",pct:""},{id:3,name:"Alcool Cétylique",pct:""}];
+  }
+
+  // ── REFROIDISSEMENT ─────────────────────────────────────────
+  if(type.phases.includes("REFROIDISSEMENT")){
+    if(typeKey==="LEAVE_IN")
+      p.REFROIDISSEMENT=[{id:1,name:"Conservateur Leucidal SF",pct:""},{id:2,name:"Vitamine E (Tocophérol)",pct:""}];
+    else if(typeKey==="CONDITIONER")
+      p.REFROIDISSEMENT=[{id:1,name:"Protéines de Soie",pct:""},{id:2,name:"Conservateur Leucidal SF",pct:""}];
+    else if(typeKey==="MASQUE")
+      p.REFROIDISSEMENT=[{id:1,name:"Protéines de Kératine",pct:""},{id:2,name:"Conservateur Leucidal SF",pct:""}];
+    else if(typeKey==="SHAMPOING")
+      p.REFROIDISSEMENT=[{id:1,name:"Acide Citrique",pct:""},{id:2,name:"Cosgard (Benzylalcool + DHA)",pct:""}];
+    else if(typeKey==="LAIT")
+      p.REFROIDISSEMENT=[{id:1,name:"Provitamine B5",pct:""},{id:2,name:"Conservateur Geogard ECT",pct:""}];
+    else if(typeKey==="CREME")
+      p.REFROIDISSEMENT=[{id:1,name:"Protéines de Riz",pct:""},{id:2,name:"Conservateur Leucidal SF",pct:""}];
+    else if(typeKey==="LOTION")
+      p.REFROIDISSEMENT=[{id:1,name:"Vitamine E (Tocophérol)",pct:""},{id:2,name:"Conservateur Geogard ECT",pct:""}];
+    else if(typeKey==="BAUME")
+      p.REFROIDISSEMENT=[{id:1,name:"Vitamine E (Tocophérol)",pct:""},{id:2,name:"HE Lavande",pct:""}];
+    else if(typeKey==="CHANTILLY")
+      p.REFROIDISSEMENT=[{id:1,name:"Vitamine E (Tocophérol)",pct:""},{id:2,name:"HE Lavande",pct:""}];
+    else if(typeKey==="SERUM")
+      p.REFROIDISSEMENT=[{id:1,name:"Extrait de Caféine",pct:""},{id:2,name:"Conservateur Leucidal SF",pct:""}];
+    else
+      p.REFROIDISSEMENT=[{id:1,name:"Vitamine E (Tocophérol)",pct:""},{id:2,name:"Conservateur Leucidal SF",pct:""}];
+  }
+
+  return p;
+}
+
+function deepClone(o){ return JSON.parse(JSON.stringify(o)); }
+function loadSaved(){ try{ return JSON.parse(localStorage.getItem("miracle_lab_v2")||"[]"); } catch(e){ return []; } }
+function saveToDisk(){ try{ localStorage.setItem("miracle_lab_v2",JSON.stringify(state.savedFormulas)); } catch(e){} }
+
+// ═══════════════════════════════════════════════════════════════
+// COMPUTED
+// ═══════════════════════════════════════════════════════════════
+function sumPhase(rows){ return rows.reduce((a,r)=>a+(parseFloat(r.pct)||0),0); }
+function nonWater(){
+  return Object.values(state.phases).reduce((a,rows)=>a+sumPhase(rows),0);
+}
+function effectiveWeight(){ return state.totalWeight||1000; }
+function waterPct(){
+  const type = FORMULA_TYPES[state.formulaType];
+  if(!type.hasWater) return 0;
+  return Math.max(0, parseFloat((100-nonWater()).toFixed(4)));
+}
+function totalPct(){ return nonWater()+waterPct(); }
+function isOver(){ return nonWater()>100.001; }
+function isOk(){ return !isOver()&&Math.abs(totalPct()-100)<0.01; }
+function trunc(s,n=32){ if(!s)return""; return s.length<=n?s:s.slice(0,n)+"…"; }
+
+// pH estimation
+function estimatePH(){
+  const type = FORMULA_TYPES[state.formulaType];
+  if(!type.hasWater) return null;
+  let ph = 6.5;
+  for(const rows of Object.values(state.phases)){
+    for(const row of rows){
+      if(!row.name) continue;
+      const data = getIngredientData(row.name);
+      const pct = parseFloat(row.pct)||0;
+      if(!pct) continue;
+      // Acide citrique — très puissant, 0.2% suffit à descendre ~1.5 unités
+      if(row.name.includes("Acide Citrique")) ph -= pct * 7;
+      // Acide lactique — moins fort que citrique
+      else if(row.name.includes("Acide Lactique")) ph -= pct * 4;
+      // Acide benzoïque / sorbique — encore plus doux
+      else if(row.name.includes("Acide Benzoïque")||row.name.includes("Acide Sorbique")) ph -= pct * 2;
+      // Autres ajusteurs
+      else if(data && data.phNote && data.phNote.includes("Baisse")) ph -= pct * 1.5;
+      // Conservateurs acidifient légèrement
+      else if(data && data.group==="Conservateurs") ph -= pct * 0.15;
+    }
+  }
+  return Math.max(2.5, Math.min(9.0, parseFloat(ph.toFixed(1))));
+}
+
+function getPhStatus(){
+  const ph = estimatePH();
+  if(ph===null) return null;
+  const type = FORMULA_TYPES[state.formulaType];
+  if(!type.phTarget) return {ph, ok:true, msg:"Pas de cible pH pour ce type"};
+  const [min,max] = type.phTarget;
+  if(ph>=min && ph<=max) return {ph, ok:true, msg:`pH optimal pour ${FORMULA_TYPES[state.formulaType].label}`};
+  if(ph<min) return {ph, ok:false, msg:`pH trop bas (${ph}) — cible : ${min}-${max}. Ajouter un tampon basique.`};
+  return {ph, ok:false, msg:`pH trop élevé (${ph}) — cible : ${min}-${max}. Ajouter Acide Citrique ou Lactique.`};
+}
+
+function checkLimit(name, pct){
+  if(!name || !pct || pct==="") return null;
+  const val = parseFloat(pct);
+  if(isNaN(val)) return null;
+  const data = getIngredientData(name);
+  if(!data) return null;
+  if(data.maxPct && val > data.maxPct) return {type:"error", msg: data.warnMsg||`Max recommandé : ${data.maxPct}%`};
+  if(data.minPct && val < data.minPct && val>0) return {type:"warn", msg: `Min recommandé : ${data.minPct}%`};
+  if(data.maxPct && val > data.maxPct*0.9 && val <= data.maxPct) return {type:"warn", msg:`Proche du max (${data.maxPct}%)`};
+  return null;
+}
+
+
+// ── COMPATIBILITY ENGINE ────────────────────────────────────
+const COMPAT_RULES = [
+  {
+    groupA:["BTMS-50","BTMS-25","Behentrimonium Chloride","Honeyquat","Polyquaternium-7","Polyquaternium-10"],
+    groupB:["Texapon N70","Texapon NSO","Texapon ASV","Coco Glucoside","Decyl Glucoside","Lauryl Glucoside","Sodium Cocoyl Isethionate (SCI)","Sodium Cocoyl Glutamate","Sodium Lauroyl Sarcosinate","Cocamidopropyl Bétaïne (CAPB)"],
+    type:"error", msg:"Ingrédient cationique (+) et anionique (-) ensemble — risque de floculation et déstabilisation de l'émulsion"
+  },
+  {
+    groupA:["Benzoate de Sodium","Sorbate de Potassium","Benzoate + Sorbate (combo)","Acide Benzoïque","Acide Sorbique"],
+    groupB:["__NO_ACID__"],
+    type:"warn", msg:"Benzoate/Sorbate inactifs sans acidifiant — Ajouter Acide Citrique ou Lactique pour descendre le pH sous 5.5"
+  },
+  {
+    groupA:["Niacinamide","Vitamine B3 (Niacinamide)"],
+    groupB:["Acide Citrique","Acide Lactique"],
+    type:"warn", msg:"Niacinamide + Acide fort — À pH < 4, conversion en niacine irritante. Maintenir pH > 4"
+  },
+  {
+    groupA:["Phénoxyéthanol"],
+    groupB:["__HIGH_PH__"],
+    type:"warn", msg:"Phénoxyéthanol perd son efficacité au-dessus de pH 7 — Vérifier le pH de votre formule"
+  },
+  {
+    groupA:["Zinc PCA"],
+    groupB:["Protéines de Kératine","Protéines de Soie","Protéines de Riz","Protéines de Blé","Protéines de Quinoa"],
+    type:"warn", msg:"Zinc PCA + Protéines — Possible compétition ionique. Tester la stabilité"
+  },
+  {
+    groupA:["Acide Citrique","Acide Lactique"],
+    groupB:["Conservateur Leucidal SF","Conservateur Leucidal Liquid"],
+    type:"warn", msg:"Acide fort + Leucidal — Maintenir pH entre 3.5 et 5.0 pour l'efficacité du conservateur"
+  },
+  {
+    groupA:["Acide Hyaluronique"],
+    groupB:["Alcool Cétylique","Alcool Stéarylique","Alcool Cétéarylique"],
+    type:"warn", msg:"Acide Hyaluronique + Alcool Gras — Introduire l'AH en phase froide après émulsification"
+  },
+];
+
+function checkCompatibility(){
+  const allNames=Object.values(state.phases).flat().map(r=>r.name).filter(Boolean);
+  if(allNames.length<2) return [];
+  const alerts=[];
+  const hasAcid=allNames.some(n=>["Acide Citrique","Acide Lactique","Acide Benzoïque","Acide Sorbique"].includes(n));
+  const ph=estimatePH();
+  for(const rule of COMPAT_RULES){
+    if(rule.groupB[0]==="__NO_ACID__"){
+      if(allNames.some(n=>rule.groupA.includes(n))&&!hasAcid)
+        alerts.push({type:rule.type,msg:rule.msg});
+      continue;
+    }
+    if(rule.groupB[0]==="__HIGH_PH__"){
+      if(allNames.some(n=>rule.groupA.includes(n))&&ph&&ph>7)
+        alerts.push({type:rule.type,msg:rule.msg});
+      continue;
+    }
+    const hasA=allNames.some(n=>rule.groupA.includes(n));
+    const hasB=allNames.some(n=>rule.groupB.includes(n));
+    if(hasA&&hasB&&!alerts.find(a=>a.msg===rule.msg))
+      alerts.push({type:rule.type,msg:rule.msg});
+  }
+  return alerts;
+}
+
+function buildCompatCard(alerts){
+  const errors=alerts.filter(a=>a.type==="error");
+  return `
+  <div style="background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.06);border:2px solid ${errors.length?"#FCA5A5":alerts.length?"#FDE68A":"#34D399"}">
+    <div style="background:${errors.length?"linear-gradient(90deg,#FEE2E2,#FEF2F2)":alerts.length?"linear-gradient(90deg,#FFFBEB,#FEF9ED)":"linear-gradient(90deg,#DCFCE7,#F0FFF4)"};padding:10px 15px;border-bottom:1px solid ${errors.length?"#FCA5A5":alerts.length?"#FDE68A":"#34D399"};display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:16px">${errors.length?"⚡":alerts.length?"⚠️":"✅"}</span>
+        <span style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:${errors.length?"#991B1B":alerts.length?"#92400E":"#064E3B"}">Compatibilité des ingrédients</span>
+      </div>
+      <span style="font-size:12px;font-weight:700;color:${errors.length?"#DC2626":alerts.length?"#EA580C":"#059669"}">
+        ${errors.length?`${errors.length} incompatibilité${errors.length>1?"s":""}`:alerts.length?`${alerts.length} avertissement${alerts.length>1?"s":""}`:alerts.length===0?"✓ OK":""}
+      </span>
+    </div>
+    <div style="padding:${alerts.length?"8px 15px 12px":"10px 15px"}">
+      ${alerts.length===0
+        ?`<p style="font-size:12px;color:#6B7280;margin:0">✓ Tous les ingrédients sont compatibles entre eux.</p>`
+        :alerts.map(a=>`<div style="display:flex;gap:8px;padding:7px 0;border-bottom:1px solid #F9FAFB;align-items:flex-start">
+            <span style="font-size:13px;flex-shrink:0">${a.type==="error"?"🚫":"⚠️"}</span>
+            <span style="font-size:12px;color:${a.type==="error"?"#991B1B":"#92400E"};line-height:1.5">${a.msg}</span>
+          </div>`).join("")}
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ACTIONS
+// ═══════════════════════════════════════════════════════════════
+function showToast(msg){
+  if(state.toastTimer) clearTimeout(state.toastTimer);
+  state.toast=msg;
+  state.toastTimer=setTimeout(()=>{state.toast=null;render();},2400);
+  render();
+}
+function updateRow(phase,id,field,val,skipRender){ state.phases[phase]=state.phases[phase].map(r=>r.id===id?{...r,[field]:val}:r); if(!skipRender) render(); }
+function addRow(phase){ const rows=state.phases[phase]; const id=Math.max(...rows.map(r=>r.id))+1; state.phases[phase]=[...rows,{id,name:"",pct:""}]; render(); }
+function removeRow(phase,id){ state.phases[phase]=state.phases[phase].filter(r=>r.id!==id); render(); }
+
+let rafId=null;
+function openDD(ddKey, triggerEl){
+  if(state.openDropdown===ddKey){state.openDropdown=null;render();return;}
+  const rect=triggerEl.getBoundingClientRect();
+  state.openDropdown=ddKey;
+  state.dropPos={top:rect.bottom+3,left:rect.left,width:rect.width};
+  state.ddSearch="";
+  render();
+  trackDD();
+}
+function trackDD(){
+  if(rafId) cancelAnimationFrame(rafId);
+  if(!state.openDropdown) return;
+  rafId=requestAnimationFrame(()=>{
+    const trigger=document.querySelector(`[data-ddkey="${state.openDropdown}"]`);
+    const panel=document.getElementById("dd-panel");
+    if(trigger&&panel){
+      const rect=trigger.getBoundingClientRect();
+      panel.style.top=rect.bottom+3+"px";
+      panel.style.left=rect.left+"px";
+      panel.style.width=rect.width+"px";
+    }
+    trackDD();
+  });
+}
+function selectIngredient(phase,id,name){ updateRow(phase,parseInt(id),"name",name); state.openDropdown=null; state.ddSearch=""; if(rafId) cancelAnimationFrame(rafId); render(); }
+function closeDD(){ state.openDropdown=null; state.ddSearch=""; if(rafId) cancelAnimationFrame(rafId); render(); }
+
+function setFormulaType(typeKey){
+  if(typeKey==="CUSTOM"){ state.showCustomModal=true; render(); return; }
+  state.formulaType=typeKey;
+  state.phases=defaultPhases(typeKey);
+  state.totalWeight=FORMULA_TYPES[typeKey].defaultWeight;
+  state.formulaName=FORMULA_TYPES[typeKey].label;
+  render();
+}
+
+function applyCustomFormula(){
+  const phases=[];
+  if(state.customPhases.AQUEUSE) phases.push("AQUEUSE");
+  if(state.customPhases.HUILEUSE) phases.push("HUILEUSE");
+  if(state.customPhases.REFROIDISSEMENT) phases.push("REFROIDISSEMENT");
+  if(phases.length===0){ showToast("Choisissez au moins une phase"); return; }
+  // Inject custom type temporarily
+  FORMULA_TYPES["CUSTOM"].hasWater=state.customHasWater;
+  FORMULA_TYPES["CUSTOM"].phases=phases;
+  state.formulaType="CUSTOM";
+  state.phases=defaultPhases("CUSTOM");
+  state.showCustomModal=false;
+  render();
+  showToast("✨ Formule personnalisée créée !");
+}
+
+function buildCustomModal(){
+  return `
+  <div class="modal-overlay" id="custom-overlay">
+    <div class="modal-box" style="max-width:420px" onclick="event.stopPropagation()">
+      <div class="modal-header" style="padding:18px 18px 18px">
+        <div class="modal-header-top" style="margin-bottom:0">
+          <div>
+            <div class="modal-subtitle">Formule sur mesure</div>
+            <div class="modal-title">✨ Créer ma formule personnalisée</div>
+          </div>
+          <button class="btn-close" id="custom-close">×</button>
+        </div>
+      </div>
+      <div style="padding:20px;display:flex;flex-direction:column;gap:16px">
+        <!-- Water toggle -->
+        <div style="background:#F8FAFC;border-radius:12px;padding:14px;border:1.5px solid #E2E8F0">
+          <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:10px;letter-spacing:.5px;text-transform:uppercase">Type de formule</div>
+          <div style="display:flex;gap:8px">
+            <button id="custom-with-water" onclick="" style="flex:1;padding:10px;border-radius:10px;border:2px solid ${state.customHasWater?"#0E7490":"#E2E8F0"};background:${state.customHasWater?"#ECFEFF":"#fff"};cursor:pointer;font-size:13px;font-weight:600;font-family:inherit;color:${state.customHasWater?"#0E7490":"#6B7280"}">
+              💧 Avec eau
+            </button>
+            <button id="custom-no-water" style="flex:1;padding:10px;border-radius:10px;border:2px solid ${!state.customHasWater?"#EA580C":"#E2E8F0"};background:${!state.customHasWater?"#FFF7ED":"#fff"};cursor:pointer;font-size:13px;font-weight:600;font-family:inherit;color:${!state.customHasWater?"#EA580C":"#6B7280"}">
+              🫙 Sans eau
+            </button>
+          </div>
+        </div>
+        <!-- Phases -->
+        <div style="background:#F8FAFC;border-radius:12px;padding:14px;border:1.5px solid #E2E8F0">
+          <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:10px;letter-spacing:.5px;text-transform:uppercase">Phases à inclure</div>
+          ${[
+            {key:"AQUEUSE",   icon:"💧", label:"Phase Aqueuse",        color:"#0E7490", bg:"#ECFEFF"},
+            {key:"HUILEUSE",  icon:"🌿", label:"Phase Huileuse",       color:"#EA580C", bg:"#FFF7ED"},
+            {key:"REFROIDISSEMENT",icon:"❄️",label:"Phase Refroidissement",color:"#059669",bg:"#ECFDF5"},
+          ].map(p=>`
+            <div id="custom-phase-${p.key}" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;margin-bottom:6px;cursor:pointer;border:2px solid ${state.customPhases[p.key]?p.color:"#E2E8F0"};background:${state.customPhases[p.key]?p.bg:"#fff"}">
+              <span style="font-size:18px">${p.icon}</span>
+              <span style="font-size:13px;font-weight:600;color:${state.customPhases[p.key]?p.color:"#6B7280"};flex:1">${p.label}</span>
+              <span style="font-size:18px">${state.customPhases[p.key]?"✅":"⬜"}</span>
+            </div>`).join("")}
+        </div>
+        <button id="custom-apply" style="background:linear-gradient(135deg,#EC4899,#DB2777);color:#fff;border:none;border-radius:12px;padding:14px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">
+          ✨ Créer ma formule personnalisée
+        </button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function saveCurrentFormula(){
+  const saved = {
+    id: Date.now(),
+    name: state.formulaName,
+    type: state.formulaType,
+    totalWeight: state.totalWeight,
+    phases: deepClone(state.phases),
+    date: new Date().toLocaleDateString("fr-FR"),
+  };
+  state.savedFormulas.unshift(saved);
+  saveToDisk();
+  showToast("✓ Formule enregistrée !");
+}
+function loadFormula(id){
+  const f=state.savedFormulas.find(s=>s.id===id);
+  if(!f) return;
+  state.formulaName=f.name;
+  state.formulaType=f.type;
+  state.totalWeight=f.totalWeight;
+  state.phases=deepClone(f.phases);
+  state.showSaved=false;
+  render();
+  showToast("✓ Formule chargée !");
+}
+function deleteFormula(id){
+  state.savedFormulas=state.savedFormulas.filter(s=>s.id!==id);
+  saveToDisk();
+  render();
+}
+
+function exportCSV(){
+  const w=waterPct(), tw=effectiveWeight();
+  let lines=[["Phase","Ingrédient","Pourcentage (%)","Poids (g)"]];
+  if(FORMULA_TYPES[state.formulaType].hasWater) lines.push(["Aqueuse","Eau Distillée",w.toFixed(2),((tw*w)/100).toFixed(1)]);
+  for(const [k,rows] of Object.entries(state.phases)){
+    rows.filter(r=>r.name).forEach(r=>{
+      lines.push([PHASES[k].label,r.name,r.pct||"0",((tw*(parseFloat(r.pct)||0))/100).toFixed(1)]);
+    });
+  }
+  lines.push(["","TOTAL","100.00",tw]);
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([lines.map(l=>l.join(",")).join("\n")],{type:"text/csv"}));
+  a.download=state.formulaName.replace(/\s+/g,"_")+".csv";
+  a.click();
+  showToast("✓ Export CSV réussi");
+}
+
+function addToLibrary(){
+  const n=state.libNewName.trim();
+  if(!n) return;
+  const ph=state.libSearch?state.libNewPhase:state.libTab;
+  const groups=state.library[ph];
+  const groupKey=state.libNewGroup||(ph==="AQUEUSE"?"Actifs Capillaires":ph==="HUILEUSE"?"Huiles Végétales":"Actifs & Vitamines");
+  if(!groups[groupKey]) groups[groupKey]=[];
+  if(Object.values(groups).flat().some(i=>i.name.toLowerCase()===n.toLowerCase())) return;
+  groups[groupKey].push({name:n, note:state.libNewNote.trim()||"Ingrédient personnalisé"});
+  state.libNewName=""; state.libNewNote=""; state.libAdding=false;
+  render();
+}
+
+function deleteFromLibrary(phase,name){
+  const groups=state.library[phase];
+  for(const g of Object.keys(groups)){
+    groups[g]=groups[g].filter(i=>i.name!==name);
+  }
+  render();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════════════
+function render(){
+  document.getElementById("app").innerHTML=buildHTML();
+  bindEvents();
+}
+
+function buildHTML(){
+  const nw=nonWater(), wp=waterPct(), tp=totalPct();
+  const over=isOver(), ok=isOk();
+  const tw=effectiveWeight();
+  const type=FORMULA_TYPES[state.formulaType];
+  const phStatus=getPhStatus();
+
+  const segs=[
+    ...(type.hasWater?[{pct:wp,color:"#0E7490"}]:[]),
+    ...Object.keys(state.phases).map(k=>({pct:sumPhase(state.phases[k]),color:PHASES[k].color}))
+  ];
+
+  return `
+  <div class="header">
+    <div class="header-inner">
+      <div class="header-top">
+        <div>
+          <div class="brand-sub">Miss Miracle Cosmetics · The Miracle Lab</div>
+          ${state.editingName
+            ?`<input class="formula-input" id="formula-name-input" value="${esc(state.formulaName)}" placeholder="Nom de ma formule…"/>`
+            :`<div class="formula-name" id="formula-name-click" style="${!state.formulaName?"opacity:.5;font-weight:400;font-size:15px":""}">
+                ${state.formulaName||"Nom de ma formule… ✏️"}
+                ${state.formulaName?`<span style="font-size:11px;opacity:.35">✏️</span>`:""}
+              </div>`}
+        </div>
+        <div class="header-controls">
+          <div class="lot-box">
+            <span class="lot-label">Lot</span>
+            <input class="lot-input" id="lot-input" type="number" value="${tw||""}" placeholder="1000"/>
+            <span class="lot-unit">g</span>
+          </div>
+          <button class="btn btn-lib" id="btn-lib">📚 Bibliothèque</button>
+          <button class="btn btn-save" id="btn-save">💾 Enregistrer</button>
+          <button class="btn ${state.savedFormulas.length>0?"btn-saved":"btn-save"}" id="btn-show-saved">📂 (${state.savedFormulas.length})</button>
+          <button class="btn btn-export" id="btn-export">↓ Télécharger ma formule</button>
+          <button class="btn btn-reset" id="btn-reset">↺</button>
+        </div>
+      </div>
+
+      <!-- FORMULA TYPE -->
+      <div class="type-bar">
+        ${Object.entries(FORMULA_TYPES).map(([k,t])=>`
+          <button class="type-btn ${state.formulaType===k?"active":""}" data-type="${k}">
+            ${t.icon} ${t.label}
+          </button>`).join("")}
+      </div>
+
+      <!-- PROGRESS -->
+      <div class="progress-bar-wrap">
+        <div class="progress-legend">
+          <div class="progress-dots">
+            ${type.hasWater?`<div class="progress-dot"><div class="dot" style="background:#0891B2"></div>Eau ${wp.toFixed(1)}%</div>`:""}
+            ${Object.entries(state.phases).map(([k])=>`<div class="progress-dot"><div class="dot" style="background:${PHASES[k].color}"></div>${PHASES[k].short} ${sumPhase(state.phases[k]).toFixed(1)}%</div>`).join("")}
+          </div>
+          <div class="progress-status" style="color:${over?"#FCA5A5":ok?"#34D399":"#FDE68A"}">
+            ${over?`⚠ +${(nw-100).toFixed(2)}%`:ok?"✓ 100%":`${tp.toFixed(2)}%`}
+          </div>
+        </div>
+        <div class="progress-track">
+          ${segs.map(s=>`<div class="progress-seg" style="width:${Math.min(Math.max(s.pct,0),100)}%;background:${s.color}"></div>`).join("")}
+          ${over?`<div class="progress-over"></div>`:""}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  ${over?`<div class="error-banner"><span style="font-size:18px">⚠️</span><div><b>Formule invalide — ${nw.toFixed(2)}% dépasse 100%</b><span>Réduisez de ${(nw-100).toFixed(2)}%</span></div></div>`:""}
+
+  <div class="content">
+    ${Object.entries(state.phases).map(([pk])=>buildPhaseCard(pk,tw,wp,over)).join("")}
+    ${phStatus?buildPHCard(phStatus,type):""}
+    ${buildCompatCard(checkCompatibility())}
+    ${buildSummary(wp,tw,over,ok)}
+  </div>
+
+  ${state.showLibrary?buildLibrary():""}
+  ${state.showSaved?buildSavedModal():""}
+  ${state.showCustomModal?buildCustomModal():""}
+  ${state.openDropdown?buildDropdownPanel():""}
+  ${state.toast?`<div class="toast">${esc(state.toast)}</div>`:""}
+  `;
+}
+
+function buildPhaseCard(pk,tw,wp,over){
+  const ph=PHASES[pk];
+  const rows=state.phases[pk];
+  const pSum=sumPhase(rows);
+  const headerSum=pk==="AQUEUSE"?pSum+(over?0:wp):pSum;
+
+  return `
+  <div class="phase-card" style="border:2px solid ${ph.mid}">
+    <div class="phase-header" style="background:${ph.hbg};border-bottom:1px solid ${ph.mid}">
+      <div class="phase-title">
+        <span class="phase-icon">${ph.icon}</span>
+        <span class="phase-label" style="color:${ph.accent}">${ph.label}</span>
+      </div>
+      <div class="phase-total">
+        <div><span class="phase-pct" style="color:${ph.color}">${headerSum.toFixed(1)}</span><span class="phase-pct-unit">%</span></div>
+        <div class="phase-grams">${((tw*headerSum)/100).toFixed(1)} g</div>
+      </div>
+    </div>
+    <div class="col-headers">
+      <div class="col-h">Ingrédient</div>
+      <div class="col-h right">%</div>
+      <div class="col-h right">Poids</div>
+      <div class="col-h"></div>
+    </div>
+    ${pk==="AQUEUSE"&&FORMULA_TYPES[state.formulaType].hasWater?buildWaterRow(wp,tw,over):""}
+    ${rows.map((row,idx)=>buildIngRow(pk,ph,row,idx,tw)).join("")}
+    <div class="add-row">
+      <button class="add-btn" data-phase="${pk}" style="background:${ph.light};border:1.5px dashed ${ph.mid};color:${ph.color}">+ Ajouter un ingrédient</button>
+    </div>
+  </div>`;
+}
+
+function buildWaterRow(wp,tw,over){
+  return `
+  <div class="water-row">
+    <div class="water-label">
+      <span class="water-name">Eau Distillée</span>
+      <span class="water-badge">AUTO</span>
+    </div>
+    <div class="pct-wrap">
+      <span class="water-pct" style="color:${over?"#DC2626":"#0E7490"}">${over?"—":wp.toFixed(2)}</span>
+      <span class="pct-unit">%</span>
+    </div>
+    <div class="water-g">${over?"—":((tw*wp)/100).toFixed(1)+"g"}</div>
+    <div></div>
+  </div>`;
+}
+
+function buildIngRow(pk,ph,row,idx,tw){
+  const key=`${pk}-${row.id}`;
+  const hasPct=row.pct!==""&&parseFloat(row.pct)>0;
+  const g=hasPct?((tw*parseFloat(row.pct))/100).toFixed(1)+"g":"—";
+  const limit=checkLimit(row.name, row.pct);
+  const borderColor=limit?(limit.type==="error"?"#DC2626":"#F59E0B"):row.name?ph.mid:"#E5E7EB";
+  const pctBorderColor=limit?(limit.type==="error"?"#DC2626":"#F59E0B"):(hasPct?ph.mid:"#E5E7EB");
+
+  return `
+  <div class="ing-row" style="background:${idx%2===1?ph.stripe:"#fff"}">
+    <div class="dd-wrap">
+      <div class="dd-trigger ${row.name?"has-value":""}" data-ddkey="${key}"
+        style="border-color:${borderColor};${state.openDropdown===key?"box-shadow:0 0 0 3px "+ph.light:""}">
+        <span class="dd-text">${esc(trunc(row.name))||"Sélectionner…"}</span>
+        <span class="dd-arrow" style="color:${ph.color}">${state.openDropdown===key?"▲":"▼"}</span>
+      </div>
+    </div>
+    <div class="pct-wrap">
+      <input class="pct-input" data-phase="${pk}" data-id="${row.id}"
+        style="border-color:${pctBorderColor};color:${ph.color};background:${hasPct?ph.light:"#fff"}"
+        type="number" value="${esc(row.pct)}" placeholder="0" min="0" max="100" step="0.1"/>
+      <span class="pct-unit">%</span>
+    </div>
+    <div class="grams-cell ${hasPct?"active":""}">${g}</div>
+    <button class="del-btn" data-phase="${pk}" data-id="${row.id}">×</button>
+  </div>
+  ${limit?`<div class="limit-warn ${limit.type==="error"?"limit-err":""}">
+    ${limit.type==="error"?"⛔":"⚠️"} ${esc(limit.msg)}
+  </div>`:""}`;
+}
+
+function buildPHCard(phStatus, type){
+  const ph=phStatus.ph;
+  const pct=((ph-2.5)/(9.0-2.5))*100;
+  const [min,max]=type.phTarget||[4.5,6.0];
+  const minPct=((min-2.5)/(9.0-2.5))*100;
+  const maxPct=((max-2.5)/(9.0-2.5))*100;
+
+  return `
+  <div class="ph-card">
+    <div class="ph-card-header">
+      <div class="ph-card-title">🧪 Gestion du pH</div>
+      <div style="font-size:20px;font-weight:900;color:${phStatus.ok?"#059669":"#EA580C"}">${ph}</div>
+    </div>
+    <div class="ph-card-body">
+      <div>
+        <div class="ph-range-track">
+          <!-- Target zone -->
+          <div style="position:absolute;top:0;left:${minPct}%;width:${maxPct-minPct}%;height:100%;background:rgba(34,197,94,.3);border-radius:4px"></div>
+          <div class="ph-range-indicator" style="left:${pct}%"></div>
+        </div>
+        <div class="ph-scale">
+          <span>2.5</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
+        </div>
+      </div>
+      <div class="ph-info">
+        <div class="ph-info-box">
+          <div class="ph-info-label">pH estimé</div>
+          <div class="ph-info-value" style="color:${phStatus.ok?"#059669":"#EA580C"}">${ph}</div>
+        </div>
+        <div class="ph-info-box">
+          <div class="ph-info-label">Cible ${FORMULA_TYPES[state.formulaType].label}</div>
+          <div class="ph-info-value">${min} – ${max}</div>
+        </div>
+      </div>
+      <div class="${phStatus.ok?"ph-ok":"ph-alert"}">
+        <span>${phStatus.ok?"✅":"⚠️"}</span>
+        <span>${esc(phStatus.msg)}</span>
+      </div>
+      <div style="font-size:10px;color:#9CA3AF;line-height:1.4">
+        ℹ️ Estimation indicative — mesurer avec un pH-mètre après fabrication. La zone verte indique la plage optimale pour ce type de formule.
+      </div>
+    </div>
+  </div>`;
+}
+
+function buildSummary(wp,tw,over,ok){
+  const bg=over?"linear-gradient(135deg,#FEE2E2,#FEF2F2)":ok?"linear-gradient(135deg,#DCFCE7,#F0FFF4)":"linear-gradient(135deg,#FFFBEB,#FEF9ED)";
+  const border=over?"#FCA5A5":ok?"#34D399":"#FDE68A";
+  const type=FORMULA_TYPES[state.formulaType];
+  const phases=[
+    ...(type.hasWater?[{label:"💧 Eau",pct:over?null:wp,color:"#0E7490"}]:[]),
+    ...Object.entries(state.phases).map(([k])=>({label:`${PHASES[k].icon} ${PHASES[k].short}`,pct:sumPhase(state.phases[k]),color:PHASES[k].color}))
+  ];
+  return `
+  <div class="summary" style="background:${bg};border:2px solid ${border}">
+    <div class="summary-phases">
+      ${phases.map(s=>`
+        <div class="summary-phase">
+          <div class="summary-phase-label" style="color:${s.color}">${s.label}</div>
+          <div class="summary-phase-pct" style="color:${s.color}">${s.pct!==null?s.pct.toFixed(1)+"%":"—"}</div>
+          <div class="summary-phase-g">${s.pct!==null?((tw*s.pct)/100).toFixed(1)+"g":"—"}</div>
+        </div>`).join("")}
+    </div>
+    <div class="summary-total">
+      <div class="summary-status" style="color:${over?"#991B1B":ok?"#064E3B":"#92400E"}">${over?"⚠ Erreur":ok?"✓ Validée":"En cours…"}</div>
+      <div class="summary-big" style="color:${over?"#DC2626":ok?"#059669":"#EA580C"}">${totalPct().toFixed(2)}%</div>
+      <div class="summary-weight">${tw} g</div>
+    </div>
+  </div>`;
+}
+
+function buildDropdownPanel(){
+  const key=state.openDropdown;
+  const parts=key.split("-");
+  const pk=parts[0];
+  const id=parts[1];
+  const ph=PHASES[pk];
+  const curRow=state.phases[pk].find(r=>r.id==id);
+  const curVal=curRow?curRow.name:"";
+  const q=state.ddSearch.toLowerCase();
+  const groups=state.library[pk];
+
+  let items=[];
+  for(const [groupName, ingList] of Object.entries(groups)){
+    const filtered=q?ingList.filter(i=>i.name.toLowerCase().includes(q)):ingList;
+    if(filtered.length>0) items.push({group:groupName, list:filtered});
+  }
+
+  return `
+  <div id="dd-panel" style="position:fixed;top:${state.dropPos.top}px;left:${state.dropPos.left}px;width:${state.dropPos.width}px;z-index:9999;background:#fff;border:1.5px solid ${ph.mid};border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,.18);overflow:hidden">
+    <div class="dd-search-wrap" style="background:${ph.light};border-bottom:2px solid ${ph.mid}">
+      <input class="dd-search" id="dd-search-input" placeholder="Rechercher…" value="${esc(state.ddSearch)}" autocomplete="off" autocorrect="off" spellcheck="false"/>
+    </div>
+    <div class="dd-list">
+      <div class="dd-clear" id="dd-clear">— Vider</div>
+      ${items.map(({group,list})=>`
+        <div class="dd-group-header">${group}</div>
+        ${list.map(ing=>`
+          <div class="dd-item ${curVal===ing.name?"selected":""}" data-ingname="${esc(ing.name)}">
+            ${curVal===ing.name?`<span style="color:${ph.color}">✓</span>`:""}
+            <span>${esc(ing.name)}</span>
+            ${ing.maxPct?`<span class="dd-item-limit">max ${ing.maxPct}%</span>`:""}
+          </div>`).join("")}
+      `).join("")}
+      ${items.length===0?`<div class="dd-empty">Aucun résultat</div>`:""}
+      ${state.ddSearch.trim()&&!Object.values(groups).flat().some(i=>i.name.toLowerCase()===state.ddSearch.trim().toLowerCase())?
+        `<div class="dd-add" style="color:${ph.accent};background:${ph.light};border-top:1px solid ${ph.mid}" id="dd-add-custom">
+          + Ajouter « ${esc(state.ddSearch.trim())} »
+        </div>`:""}
+    </div>
+  </div>`;
+}
+
+function buildSavedModal(){
+  return `
+  <div class="saved-modal-overlay" id="saved-overlay">
+    <div class="saved-modal" onclick="event.stopPropagation()">
+      <div class="saved-header">
+        <div>
+          <div class="saved-title">💾 Formules enregistrées</div>
+          <div class="saved-sub">${state.savedFormulas.length} formule${state.savedFormulas.length>1?"s":""} sauvegardée${state.savedFormulas.length>1?"s":""}</div>
+        </div>
+        <button class="btn-close" id="saved-close">×</button>
+      </div>
+      <button class="btn-save-current" id="btn-save-from-modal">+ Enregistrer la formule actuelle</button>
+      <div class="saved-list">
+        ${state.savedFormulas.length===0?`<div class="saved-empty">Aucune formule enregistrée.<br>Appuyez sur 💾 pour sauvegarder.</div>`:""}
+        ${state.savedFormulas.map(f=>`
+          <div class="saved-item">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div class="saved-item-name">${esc(f.name)}</div>
+              <span class="saved-item-type">${FORMULA_TYPES[f.type]?.icon||"🧪"} ${FORMULA_TYPES[f.type]?.label||f.type}</span>
+            </div>
+            <div class="saved-item-meta">
+              <span>📅 ${f.date}</span>
+              <span>⚖️ ${f.totalWeight}g</span>
+              <span>📦 ${Object.values(f.phases).flat().filter(r=>r.name).length} ingrédients</span>
+            </div>
+            <div class="saved-item-actions">
+              <button class="btn-load" data-loadid="${f.id}">Charger cette formule</button>
+              <button class="btn-del-saved" data-delid="${f.id}">Supprimer</button>
+            </div>
+          </div>`).join("")}
+      </div>
+    </div>
+  </div>`;
+}
+
+function buildLibrary(){
+  const ph=PHASES[state.libTab];
+  const q=state.libSearch.toLowerCase();
+  const groups=state.library[state.libTab];
+  const initLib=LIBRARY;
+
+  let displayGroups={};
+  if(q){
+    for(const [phase,pgroups] of Object.entries(state.library)){
+      for(const [g,items] of Object.entries(pgroups)){
+        const filtered=items.filter(i=>i.name.toLowerCase().includes(q)||i.note.toLowerCase().includes(q));
+        if(filtered.length>0){
+          const label=`${PHASES[phase].icon} ${g}`;
+          displayGroups[label]=filtered.map(i=>({...i,phase}));
+        }
+      }
+    }
+  } else {
+    for(const [g,items] of Object.entries(groups)){
+      displayGroups[g]=items.map(i=>({...i,phase:state.libTab}));
+    }
+  }
+
+  const total=Object.values(state.library).flatMap(pg=>Object.values(pg)).flat().length;
+  const initNames=new Set(Object.values(LIBRARY).flatMap(pg=>Object.values(pg)).flat().map(i=>i.name));
+
+  return `
+  <div class="modal-overlay" id="lib-overlay">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div class="modal-header-top">
+          <div>
+            <div class="modal-subtitle">Référentiel professionnel</div>
+            <div class="modal-title">📚 Bibliothèque d'Ingrédients</div>
+            <div class="modal-count">${total} ingrédients par groupes</div>
+          </div>
+          <div class="modal-btns">
+            <button class="btn-add-lib" id="lib-add-btn">+ Ajouter</button>
+            <button class="btn-close" id="lib-close">×</button>
+          </div>
+        </div>
+        <input class="modal-search" id="lib-search" placeholder="Rechercher dans toutes les phases…" value="${esc(state.libSearch)}"/>
+        ${!state.libSearch?`
+        <div class="modal-tabs">
+          ${Object.entries(PHASES).map(([k,p])=>`
+            <button class="modal-tab ${state.libTab===k?"active":""}" data-libtab="${k}"
+              style="${state.libTab===k?"color:"+p.accent:""}">
+              ${p.icon} ${p.label.replace("Phase ","")}
+            </button>`).join("")}
+        </div>`:`<div style="height:10px"></div>`}
+      </div>
+
+      ${state.libAdding?`
+      <div class="add-form">
+        <div class="add-form-title">✨ Nouvel ingrédient</div>
+        <div class="add-form-row">
+          <select class="add-select" id="lib-new-phase">
+            ${Object.entries(PHASES).map(([k,p])=>`<option value="${k}" ${state.libNewPhase===k?"selected":""}>${p.icon} ${p.label}</option>`).join("")}
+          </select>
+          <input class="add-input" id="lib-new-name" placeholder="Nom *" value="${esc(state.libNewName)}"/>
+        </div>
+        <input class="add-input" id="lib-new-note" placeholder="Description / propriétés" value="${esc(state.libNewNote)}"/>
+        <div class="add-form-btns">
+          <button class="btn-confirm" id="lib-confirm" style="background:${state.libNewName.trim()?"linear-gradient(135deg,#059669,#047857)":"#E5E7EB"};color:${state.libNewName.trim()?"#fff":"#9CA3AF"}">
+            Ajouter à la bibliothèque
+          </button>
+          <button class="btn-cancel" id="lib-cancel">Annuler</button>
+        </div>
+      </div>`:""}
+
+      <div class="lib-list">
+        ${Object.entries(displayGroups).map(([groupName,items])=>`
+          <div class="lib-group-header" style="background:${q?"#F8FAFC":ph.light};color:${q?"#94A3B8":ph.accent}">
+            ${groupName} <span style="font-weight:400;opacity:.6">(${items.length})</span>
+          </div>
+          ${items.map((ing,i)=>{
+            const p=PHASES[ing.phase];
+            const isCustom=!initNames.has(ing.name);
+            return `
+            <div class="lib-item" style="background:${i%2===0?"#fff":"#FAFAFA"}">
+              <div class="lib-dot" style="background:${p.color}"></div>
+              <div class="lib-info">
+                <div class="lib-name">
+                  ${esc(ing.name)}
+                  ${isCustom?`<span class="lib-badge-custom">PERSO</span>`:""}
+                  ${ing.maxPct?`<span class="lib-limit">max ${ing.maxPct}%</span>`:""}
+                </div>
+                <div class="lib-note">${esc(ing.note)}</div>
+              </div>
+              ${q?`<div class="lib-phase-badge" style="background:${p.light};color:${p.accent}">${p.icon} ${p.short}</div>`:""}
+              <button class="del-lib-btn" data-libphase="${ing.phase}" data-libname="${esc(ing.name)}">🗑</button>
+            </div>`;
+          }).join("")}
+        `).join("")}
+        ${Object.keys(displayGroups).length===0?`<div style="padding:40px;text-align:center;color:#9CA3AF;font-size:14px">Aucun résultat</div>`:""}
+      </div>
+    </div>
+  </div>`;
+}
+
+function esc(s){ return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+
+// ═══════════════════════════════════════════════════════════════
+// EVENTS
+// ═══════════════════════════════════════════════════════════════
+function bindEvents(){
+  // Name
+  document.getElementById("formula-name-click")?.addEventListener("click",()=>{state.editingName=true;render();setTimeout(()=>document.getElementById("formula-name-input")?.focus(),50);});
+  const ni=document.getElementById("formula-name-input");
+  if(ni){
+    ni.addEventListener("blur",e=>{state.formulaName=e.target.value;state.editingName=false;render();});
+    ni.addEventListener("keydown",e=>{if(e.key==="Enter"){state.formulaName=e.target.value;state.editingName=false;render();}});
+  }
+  // Lot — no render while typing
+  const lotEl=document.getElementById("lot-input");
+  if(lotEl){
+    lotEl.addEventListener("input",e=>{state.totalWeight=parseFloat(e.target.value)||0;});
+    lotEl.addEventListener("blur",()=>render());
+    lotEl.addEventListener("keydown",e=>{if(e.key==="Enter") e.target.blur();});
+  }
+  // Type buttons
+  document.querySelectorAll(".type-btn").forEach(el=>el.addEventListener("click",e=>setFormulaType(e.currentTarget.dataset.type)));
+  // Header btns
+  document.getElementById("btn-lib")?.addEventListener("click",()=>{state.showLibrary=true;render();});
+  document.getElementById("btn-save")?.addEventListener("click",saveCurrentFormula);
+  document.getElementById("btn-show-saved")?.addEventListener("click",()=>{state.showSaved=true;render();});
+  document.getElementById("btn-export")?.addEventListener("click",exportCSV);
+  document.getElementById("btn-reset")?.addEventListener("click",()=>{state.phases=defaultPhases(state.formulaType);state.totalWeight=FORMULA_TYPES[state.formulaType].defaultWeight;showToast("Formule réinitialisée");});
+  // Pct inputs — update state silently while typing, render only on blur/enter
+  document.querySelectorAll(".pct-input").forEach(el=>{
+    el.addEventListener("input",e=>{
+      updateRow(e.target.dataset.phase,parseInt(e.target.dataset.id),"pct",e.target.value,true);
+      // Update only the grams display inline without full re-render
+      const tw=effectiveWeight();
+      const val=parseFloat(e.target.value)||0;
+      const row=e.target.closest(".ing-row");
+      if(row){
+        const gc=row.querySelector(".grams-cell");
+        if(gc){
+          gc.textContent=val>0?((tw*val)/100).toFixed(1)+"g":"—";
+          gc.className="grams-cell"+(val>0?" active":"");
+        }
+      }
+    });
+    el.addEventListener("blur",e=>{
+      updateRow(e.target.dataset.phase,parseInt(e.target.dataset.id),"pct",e.target.value);
+    });
+    el.addEventListener("keydown",e=>{
+      if(e.key==="Enter") e.target.blur();
+    });
+  });
+  // Delete row
+  document.querySelectorAll(".del-btn").forEach(el=>el.addEventListener("click",e=>removeRow(e.currentTarget.dataset.phase,parseInt(e.currentTarget.dataset.id))));
+  // Add row
+  document.querySelectorAll(".add-btn").forEach(el=>el.addEventListener("click",e=>addRow(e.currentTarget.dataset.phase)));
+  // Dropdowns
+  document.querySelectorAll(".dd-trigger").forEach(el=>{
+    const open=()=>openDD(el.dataset.ddkey,el);
+    el.addEventListener("mousedown",e=>{e.preventDefault();open();});
+    el.addEventListener("touchend",e=>{e.preventDefault();open();});
+  });
+  // DD panel
+  const ddPanel=document.getElementById("dd-panel");
+  if(ddPanel){
+    const dds=document.getElementById("dd-search-input");
+    if(dds){
+      dds.addEventListener("input",e=>{
+        state.ddSearch=e.target.value;
+        // filter list inline without full re-render
+        const q=e.target.value.toLowerCase();
+        const pk=state.openDropdown.split("-")[0];
+        const groups=state.library[pk];
+        const panel=document.getElementById("dd-panel");
+        if(!panel) return;
+        const list=panel.querySelector(".dd-list");
+        if(!list) return;
+        // just re-render the panel content only
+        const id=state.openDropdown.split("-")[1];
+        const curRow=state.phases[pk].find(r=>r.id==id);
+        const curVal=curRow?curRow.name:"";
+        const ph=PHASES[pk];
+        let html=`<div class="dd-clear" id="dd-clear">— Vider</div>`;
+        for(const [groupName,ingList] of Object.entries(groups)){
+          const filtered=q?ingList.filter(i=>i.name.toLowerCase().includes(q)):ingList;
+          if(filtered.length>0){
+            html+=`<div class="dd-group-header">${groupName}</div>`;
+            filtered.forEach(ing=>{
+              html+=`<div class="dd-item ${curVal===ing.name?"selected":""}" data-ingname="${esc(ing.name)}">
+                ${curVal===ing.name?`<span style="color:${ph.color}">✓</span>`:""}
+                <span>${esc(ing.name)}</span>
+                ${ing.maxPct?`<span class="dd-item-limit">max ${ing.maxPct}%</span>`:""}
+              </div>`;
+            });
+          }
+        }
+        if(!Object.values(groups).some(arr=>arr.some(i=>i.name.toLowerCase().includes(q)))){
+          html+=`<div class="dd-empty">Aucun résultat</div>`;
+        }
+        if(e.target.value.trim()&&!Object.values(groups).flat().some(i=>i.name.toLowerCase()===e.target.value.trim().toLowerCase())){
+          html+=`<div class="dd-add" style="color:${ph.accent};background:${ph.light};border-top:1px solid ${ph.mid}" id="dd-add-custom">+ Ajouter « ${esc(e.target.value.trim())} »</div>`;
+        }
+        list.innerHTML=html;
+        // rebind items
+        list.querySelectorAll(".dd-item").forEach(el=>{
+          const sel=()=>{const [ppk,iid]=state.openDropdown.split("-");selectIngredient(ppk,iid,el.dataset.ingname);};
+          el.addEventListener("mousedown",ev=>{ev.preventDefault();sel();});
+          el.addEventListener("touchend",ev=>{ev.preventDefault();sel();});
+        });
+        list.querySelector(".dd-clear")?.addEventListener("mousedown",ev=>{ev.preventDefault();const [ppk,iid]=state.openDropdown.split("-");selectIngredient(ppk,iid,"");});
+        list.querySelector("#dd-add-custom")?.addEventListener("mousedown",ev=>{ev.preventDefault();const [ppk,iid]=state.openDropdown.split("-");selectIngredient(ppk,iid,state.ddSearch.trim());});
+      });
+      setTimeout(()=>document.getElementById("dd-search-input")?.focus(),80);
+    }
+    document.getElementById("dd-clear")?.addEventListener("mousedown",e=>{e.preventDefault();const [pk,id]=state.openDropdown.split("-");selectIngredient(pk,id,"");});
+    document.querySelectorAll(".dd-item").forEach(el=>{
+      const sel=()=>{const [pk,id]=state.openDropdown.split("-");selectIngredient(pk,id,el.dataset.ingname);};
+      el.addEventListener("mousedown",e=>{e.preventDefault();sel();});
+      el.addEventListener("touchend",e=>{e.preventDefault();sel();});
+    });
+    document.getElementById("dd-add-custom")?.addEventListener("mousedown",e=>{e.preventDefault();const [pk,id]=state.openDropdown.split("-");selectIngredient(pk,id,state.ddSearch.trim());});
+  }
+  // Close DD outside
+  document.addEventListener("mousedown",function(e){
+    if(state.openDropdown&&!e.target.closest("#dd-panel")&&!e.target.closest(".dd-trigger"))closeDD();
+  });
+  // Library
+  document.getElementById("lib-overlay")?.addEventListener("mousedown",e=>{if(e.target.id==="lib-overlay"){state.showLibrary=false;render();}});
+  document.getElementById("lib-close")?.addEventListener("click",()=>{state.showLibrary=false;render();});
+
+  // lib-search — no render while typing
+  const libSearchEl=document.getElementById("lib-search");
+  if(libSearchEl){
+    libSearchEl.addEventListener("input",e=>{state.libSearch=e.target.value;});
+    libSearchEl.addEventListener("blur",()=>render());
+    libSearchEl.addEventListener("keydown",e=>{if(e.key==="Enter") e.target.blur();});
+    // Restore cursor position after render
+    const pos=libSearchEl.selectionStart;
+    libSearchEl.setSelectionRange(pos,pos);
+  }
+
+  document.querySelectorAll("[data-libtab]").forEach(el=>el.addEventListener("click",e=>{state.libTab=e.currentTarget.dataset.libtab;state.libSearch="";render();}));
+  document.getElementById("lib-add-btn")?.addEventListener("click",()=>{state.libAdding=true;render();});
+  document.getElementById("lib-cancel")?.addEventListener("click",()=>{state.libAdding=false;state.libNewName="";state.libNewNote="";render();});
+  document.getElementById("lib-confirm")?.addEventListener("click",addToLibrary);
+
+  // lib-new-name — no render while typing
+  const libNameEl=document.getElementById("lib-new-name");
+  if(libNameEl){
+    libNameEl.addEventListener("input",e=>{state.libNewName=e.target.value;});
+    libNameEl.addEventListener("keydown",e=>{if(e.key==="Enter") document.getElementById("lib-new-note")?.focus();});
+  }
+  // lib-new-note — no render while typing
+  const libNoteEl=document.getElementById("lib-new-note");
+  if(libNoteEl){
+    libNoteEl.addEventListener("input",e=>{state.libNewNote=e.target.value;});
+    libNoteEl.addEventListener("keydown",e=>{if(e.key==="Enter") addToLibrary();});
+  }
+
+  document.getElementById("lib-new-phase")?.addEventListener("change",e=>{state.libNewPhase=e.target.value;});
+  document.querySelectorAll(".del-lib-btn").forEach(el=>el.addEventListener("click",e=>deleteFromLibrary(e.currentTarget.dataset.libphase,e.currentTarget.dataset.libname)));
+  // Custom formula modal
+  document.getElementById("custom-overlay")?.addEventListener("mousedown",e=>{if(e.target.id==="custom-overlay"){state.showCustomModal=false;render();}});
+  document.getElementById("custom-close")?.addEventListener("click",()=>{state.showCustomModal=false;render();});
+  document.getElementById("custom-with-water")?.addEventListener("click",()=>{state.customHasWater=true;render();});
+  document.getElementById("custom-no-water")?.addEventListener("click",()=>{state.customHasWater=false;render();});
+  ["AQUEUSE","HUILEUSE","REFROIDISSEMENT"].forEach(k=>{
+    document.getElementById(`custom-phase-${k}`)?.addEventListener("click",()=>{state.customPhases[k]=!state.customPhases[k];render();});
+  });
+  document.getElementById("custom-apply")?.addEventListener("click",applyCustomFormula);
+  document.getElementById("saved-close")?.addEventListener("click",()=>{state.showSaved=false;render();});
+  document.getElementById("btn-save-from-modal")?.addEventListener("click",saveCurrentFormula);
+  document.querySelectorAll(".btn-load").forEach(el=>el.addEventListener("click",e=>loadFormula(parseInt(e.currentTarget.dataset.loadid))));
+  document.querySelectorAll(".btn-del-saved").forEach(el=>el.addEventListener("click",e=>deleteFormula(parseInt(e.currentTarget.dataset.delid))));
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+// ACCESS CONTROL
+// ═══════════════════════════════════════════════════════════════
+const VALID_CODES = ["MMC17E0", "MMC7CFC", "MMCD621", "MMCD409", "MMC6154", "MMC1BBC", "MMC0AE6", "MMCFD15", "MMCFFF8", "MMCE6A3", "MMC6A7E", "MMC8576", "MMCC459", "MMC3923", "MMCCF2B", "MMC6F22", "MMCB9AA", "MMC1B00", "MMC9D3B", "MMC1DD4"];
+const STORAGE_KEY = "mmc_access_v1";
+
+function isUnlocked(){
+  try{ return localStorage.getItem(STORAGE_KEY)==="1"; }catch(e){return false;}
+}
+function unlock(){
+  try{ localStorage.setItem(STORAGE_KEY,"1"); }catch(e){}
+}
+
+function showAccessScreen(){
+  document.getElementById("app").style.display="none";
+  let screen = document.getElementById("access-screen");
+  if(!screen){
+    screen = document.createElement("div");
+    screen.id = "access-screen";
+    screen.className = "access-screen";
+    screen.innerHTML = `
+      <div class="access-card">
+        <div class="access-logo">🧪</div>
+        <div class="access-brand">Miss Miracle Cosmetics</div>
+        <div class="access-title">The Miracle Lab</div>
+        <div class="access-subtitle">Entrez votre code d'accès personnel<br>pour accéder au calculateur</div>
+        <div class="access-input-wrap">
+          <input class="access-input" id="access-code-input" 
+            placeholder="EX: MMC-XXXX" maxlength="8"
+            autocomplete="off" autocorrect="off" spellcheck="false"/>
+        </div>
+        <div class="access-error" id="access-error">❌ Code invalide — vérifiez votre email d'achat</div>
+        <button class="access-btn" id="access-btn">✨ Accéder à The Miracle Lab</button>
+        <div class="access-hint">
+          <span class="access-sparkle">✦</span> 
+          Votre code se trouve dans votre email de confirmation d'achat.<br>
+          <span class="access-sparkle">✦</span> 
+          Support : missmiraclecosmeticssenegal@gmail.com
+        </div>
+      </div>
+    `;
+    document.body.appendChild(screen);
+  }
+  screen.style.display="flex";
+  
+  // Bind events
+  const input = document.getElementById("access-code-input");
+  const btn = document.getElementById("access-btn");
+  const errEl = document.getElementById("access-error");
+  
+  input.addEventListener("input", e => {
+    e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,"");
+    input.classList.remove("error");
+    errEl.style.display="none";
+  });
+  
+  input.addEventListener("keydown", e => {
+    if(e.key==="Enter") tryUnlock();
+  });
+  
+  btn.addEventListener("click", tryUnlock);
+  
+  setTimeout(()=>input.focus(), 300);
+  
+  function tryUnlock(){
+    const val = input.value.trim().toUpperCase();
+    // Accept with or without dash: MMC1234 or MMCA1B2
+    const normalized = val.replace(/-/g,"");
+    if(VALID_CODES.includes(normalized)){
+      input.classList.add("success");
+      input.classList.remove("error");
+      btn.textContent = "✅ Accès accordé !";
+      btn.style.background = "linear-gradient(135deg,#059669,#047857)";
+      btn.style.color = "#fff";
+      unlock();
+      setTimeout(()=>{
+        screen.style.display="none";
+        document.getElementById("app").style.display="";
+        render();
+      }, 800);
+    } else {
+      input.classList.add("error");
+      input.classList.remove("success");
+      errEl.style.display="block";
+      btn.textContent = "✨ Accéder à The Miracle Lab";
+    }
+  }
+}
+
+// Check on load
+if(!isUnlocked()){
+  document.addEventListener("DOMContentLoaded", showAccessScreen);
+  window.addEventListener("load", ()=>{
+    if(!isUnlocked()) showAccessScreen();
+  });
+}
+
+
+if(isUnlocked()) render();
+</script>
+</body>
+</html>
